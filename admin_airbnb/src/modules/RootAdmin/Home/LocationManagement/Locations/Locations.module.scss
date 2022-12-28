@@ -1,0 +1,135 @@
+.wrapLocations {
+  .headerLocations {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 20px 20px;
+    .search {
+      border: 2px solid black;
+      border-radius: 15px;
+      padding: 5px;
+
+      input {
+        border: none;
+        padding: 5px 10px;
+      }
+      span {
+        margin: 5px;
+        cursor: pointer;
+        svg {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+
+  .addImgLocation{
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    width: 100%;
+    cursor: pointer;
+      .iconAddImg {
+        width: 35px;
+        height: 35px;
+        border: 1px solid black;
+        border-radius: 5px;
+        text-align: center;
+        line-height: 30px;
+        cursor: pointer;
+        font-size: 20px;
+    }
+    p{
+        margin: 0 10px ;
+    }
+    &:hover {
+        color: rgb(59, 195, 59);
+        // background-color: white;
+        border-color: rgb(59, 195, 59);
+        .iconAddImg{
+          border-color: rgb(59, 195, 59);
+
+        }
+      }
+  }
+
+  .action {
+    display: flex;
+    .iconEdit {
+      width: 28px;
+      height: 28px;
+      border: 1px solid black;
+      border-radius: 5px;
+      text-align: center;
+      line-height: 23px;
+      cursor: pointer;
+      margin: 0 5px;
+      font-size: 20px;
+      &:hover {
+        color: rgb(59, 195, 59);
+        background-color: white;
+        border-color: rgb(59, 195, 59);
+      }
+    }
+    .iconDelete {
+      width: 28px;
+      height: 28px;
+      border: 1px solid black;
+      border-radius: 5px;
+      text-align: center;
+      line-height: 23px;
+      cursor: pointer;
+      margin: 0 5px;
+      font-size: 20px;
+      &:hover {
+        color: rgb(248, 111, 111);
+        background-color: white;
+        border-color: rgb(248, 111, 111);
+      }
+    }
+  }
+
+  .imgLocation{
+    img{
+      border-radius: 15px;
+    }
+  }
+}
+
+// .addImgLocation{
+//     form{
+//         display: flex;
+//         justify-content: space-between;
+//         margin-bottom: 15px;
+//         input{
+//             width: 70%;
+//             border: 1px solid black;
+//             border-radius: 10px;
+//             padding: 10px;
+//             // margin-right: 20px;
+//         }
+//         .btnImgPreview{
+//             text-align: end;
+//             padding: 10px 50px;
+//             border-radius: 10px;
+//             background-color: #fff;
+//             font-weight: 500;
+//             border: 2px solid #ff385c;
+//             color: #ff385c;
+//             letter-spacing: 2px;
+//             &:hover{
+//                 background-color: #ff385c;
+//                 color: #fff;
+//             }
+//         }
+//     }
+
+//     .imgPreview{
+//         height: 500px;
+//         img{
+//             width: 100%;
+//             height: 100%;
+//             border-radius: 20px;
+//         }
+//     }
+// }

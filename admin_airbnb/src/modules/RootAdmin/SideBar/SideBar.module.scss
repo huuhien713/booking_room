@@ -1,0 +1,17 @@
+.wrapSidebar{
+    border-right: 5px solid #edf2f9;
+    min-height: 100vh;
+    max-width: 250px;
+    width: 100%;
+    p{
+        margin: 0;
+    }
+    .logo{
+        width: 230px;
+        margin-bottom: 20px;
+        transition: all 0.5s ease;
+        img{
+            width: 100%;
+        }
+    }
+}

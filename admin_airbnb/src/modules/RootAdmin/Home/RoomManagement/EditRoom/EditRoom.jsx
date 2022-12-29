@@ -15,15 +15,15 @@ const EditRoom = ({ idRoom }) => {
   const dispatch = useDispatch();
   const { room, loadingRoom } = useSelector((state) => state.roomSlice);
   const { modalEditRoom } = useSelector((state) => state.modalSlice);
-  const {locations} = useSelector(state => state.locationSlice)
+  const { locations } = useSelector(state => state.locationSlice)
 
   useEffect(() => {
     dispatch(getRoomById(idRoom));
   }, [idRoom, modalEditRoom]);
 
-  useEffect(() => {
-    dispatch(getLocations());
-  },[])
+  // useEffect(() => {
+  //   dispatch(getLocations());
+  // },[])
 
   const { register, handleSubmit, formState, reset, setValue, getValues } = useForm({
     defaultValues: {

@@ -21,10 +21,6 @@ const EditRoom = ({ idRoom }) => {
     dispatch(getRoomById(idRoom));
   }, [idRoom, modalEditRoom]);
 
-  // useEffect(() => {
-  //   dispatch(getLocations());
-  // },[])
-
   const { register, handleSubmit, formState, reset, setValue, getValues } = useForm({
     defaultValues: {
       tenPhong: "",

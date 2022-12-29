@@ -9,15 +9,27 @@ import bookingRoomAPI from "../../../../../services/bookingRoomAPI";
 import styles from "./EditBooking.module.scss";
 import { getBookingRooms } from "../../../../../slices/bookingRoomSlice";
 import { handleModalEditBooking } from "../../../../../slices/modalSlice";
+import { getRooms } from "../../../../../slices/roomSlice";
+import Loading from "../../../../../components/Loading/Loading";
 
 const EditBooking = () => {
     const dispatch = useDispatch();
   const { bookingRoom } = useSelector((state) => state.modalSlice);
+  const { rooms, loading } = useSelector((state) => state.roomSlice);
+  
   const [idBooking, setIdBooking] = useState(null);
 
   useEffect(() => {
     setIdBooking(bookingRoom?.id);
-  },[bookingRoom])
+  },[bookingRoom]);
+
+  useEffect(() => {
+    dispatch(getRooms());
+
+    return () => {
+      console.log("component didmount")
+    }
+  },[])
 
   // Form
   const { register, handleSubmit, formState, setValue } = useForm({
@@ -61,6 +73,11 @@ const EditBooking = () => {
       });
     }
   };
+
+  if(loading){
+    return <Loading />
+  }
+
   return (
     <div className={styles.formEditBooking}>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -72,24 +89,28 @@ const EditBooking = () => {
             </div>
           </Col>
           <Col span={12}>
-            <div className={styles.input}>
-              <label>Room code</label>
-              <input
-                {...register("maPhong", {
-                  required: {
-                    value: true,
-                    message: "Room name is required",
-                  },
-                  pattern: {
-                    value: /^[1-9]|[0-9]{2,}$/,
-                    message: "Room code is integer and greater than 0",
-                  },
-                })}
-              />
-              {errors.maPhong && (
-                <p className={styles.txtError}>{errors.maPhong.message}</p>
-              )}
-            </div>
+          <div className={styles.input}>
+                <label>Room</label>
+                <select
+                  {...register("maPhong", {
+                    required: {
+                      value: true,
+                      message: "Room name is required",
+                    },
+                  })}
+                >
+                  <option value="">Select room</option>
+                  {
+                    rooms.map(item => (
+                      <option key={item.id} value={item.id} >{item.tenPhong}</option>
+                    ))
+                  } 
+                </select>
+
+                {errors.maPhong && (
+                  <p className={styles.txtError}>{errors.maPhong.message}</p>
+                )}
+              </div>
           </Col>
           <Col span={12}>
             <div className={styles.input}>

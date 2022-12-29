@@ -8,6 +8,11 @@ const bookingRoomAPI = {
     getBookingById: (id) => {
         return fetcher.get(`dat-phong/${id}`);
     },
+
+    getBookingByUser: (idUser) => {
+        return fetcher.get(`dat-phong/lay-theo-nguoi-dung/${idUser}`);
+    },
+
     createBooking: (values) => {
         return fetcher.post("dat-phong", values);
     },

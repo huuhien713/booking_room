@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteUserAction, getUser } from "../../../../../slices/userSlice";
 import {
@@ -14,16 +14,38 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Users.module.scss";
 import EditUser from "../EditUser";
 import { handleModalEditUser } from "../../../../../slices/modalSlice";
+import Loading from "../../../../../components/Loading/Loading";
 
 const Users = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { users, loading } = useSelector((state) => state.userSlice);
-  const { modalEditUser } = useSelector((state => state.modalSlice));
-
+  const { modalEditUser } = useSelector((state) => state.modalSlice);
+  
+  const [searchTerm, setSearchTerm] = useState(null);
   const [deletedUser, setDeletedUser] = useState(false);
   const [idUser, setIdUser] = useState(null);
+
+  const timeoutRef = useRef();
+
+  const handleSearchUser = (evt) => {
+    clearTimeout(timeoutRef.current);
+
+    timeoutRef.current = setTimeout(() => {
+      (async () => {
+        try {
+          if(!evt.target.value){
+            setSearchTerm(users);
+          }
+          const data = await userAPI.SearchUsers(evt.target.value);
+          setSearchTerm(data);
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    }, 300);
+  };
 
   useEffect(() => {
     dispatch(getUser());
@@ -109,34 +131,41 @@ const Users = () => {
     },
   ];
 
-  const dataSource = users.map((user, index) => {
-    return {
-      key: user.id,
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      birthday: user.birthday,
-      gender: `${user.gender}`,
-      role: user.role,
-      action: (
-        <div className={styles.action}>
-          <div
-            className={styles.iconEdit}
-            // onClick={() => navigate(`/admin/users/${user.id}`)}
-            onClick={() => showModal(user.id)}
-          >
-            <EditOutlined />
+  const dataSource = (searchTerm ? searchTerm : users).map(
+    (user, index) => {
+      return {
+        key: user.id,
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        birthday: user.birthday,
+        gender: `${user.gender}`,
+        role: user.role,
+        action: (
+          <div className={styles.action}>
+            <div
+              className={styles.iconEdit}
+              // onClick={() => navigate(`/admin/users/${user.id}`)}
+              onClick={() => showModal(user.id)}
+            >
+              <EditOutlined />
+            </div>
+            <div
+              className={styles.iconDelete}
+              onClick={() => deleteUser(user.id)}
+            >
+              <DeleteOutlined />
+            </div>
           </div>
-          <div
-            className={styles.iconDelete}
-            onClick={() => deleteUser(user.id)}
-          >
-            <DeleteOutlined />
-          </div>
-        </div>
-      ),
-    };
-  });
+        ),
+      };
+    }
+  );
+
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className={styles.wrapUsers}>
@@ -144,7 +173,12 @@ const Users = () => {
       <div className={styles.headerUser}>
         <h3>USERS</h3>
         <div className={styles.search}>
-          <input type="text" placeholder="Search users" />
+          <input
+            ref={timeoutRef}
+            type="text"
+            placeholder="Search users"
+            onChange={handleSearchUser}
+          />
           <SearchOutlined />
         </div>
       </div>
@@ -167,7 +201,6 @@ const Users = () => {
         footer={null}
         onCancel={handleCancel}
         width={1000}
-
       >
         <EditUser idUser={idUser} />
       </Modal>

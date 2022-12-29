@@ -42,8 +42,8 @@ const AddUser = () => {
   };
 
   return (
-    <div>
-      <h1>AddUser</h1>
+    <div className={styles.wrapAddUser}>
+      <h2>Adding User</h2>
       <div className={styles.wrapForm}>
         <Row justify="center">
           <Col span={20}>
@@ -193,6 +193,7 @@ const AddUser = () => {
                       )}
                     </div>
                   </Col>
+                  <Col span={12}></Col>
                 </Row>
                 <div className={styles.btn}>
                   <button>Submit</button>

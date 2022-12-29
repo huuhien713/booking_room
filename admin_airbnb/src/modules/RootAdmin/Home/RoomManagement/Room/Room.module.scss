@@ -10,11 +10,14 @@
       padding: 5px;
       font-size: 15px;
       width: 25%;
-      input {
+      select {
+        font-size: 16px;
         border: none;
         padding: 5px 10px;
         width: 88%;
+        outline: none;
       }
+
       span {
         margin: 5px;
         cursor: pointer;
@@ -24,34 +27,33 @@
       }
     }
   }
-  .addImgRoom{
+  .addImgRoom {
     display: flex;
     align-items: center;
     margin: 0 auto;
     width: 100%;
     cursor: pointer;
-      .iconAddImg {
-        width: 35px;
-        height: 35px;
-        border: 1px solid black;
-        border-radius: 5px;
-        text-align: center;
-        line-height: 30px;
-        cursor: pointer;
-        font-size: 20px;
+    .iconAddImg {
+      width: 35px;
+      height: 35px;
+      border: 1px solid black;
+      border-radius: 5px;
+      text-align: center;
+      line-height: 30px;
+      cursor: pointer;
+      font-size: 20px;
     }
-    p{
-        margin: 0 10px ;
+    p {
+      margin: 0 10px;
     }
     &:hover {
-        color: rgb(59, 195, 59);
-        // background-color: white;
+      color: rgb(59, 195, 59);
+      // background-color: white;
+      border-color: rgb(59, 195, 59);
+      .iconAddImg {
         border-color: rgb(59, 195, 59);
-        .iconAddImg{
-          border-color: rgb(59, 195, 59);
-
-        }
       }
+    }
   }
   .action {
     .iconEdit {
@@ -88,4 +90,3 @@
     }
   }
 }
-

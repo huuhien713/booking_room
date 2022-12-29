@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Col, Row} from "antd";
-import Swal from 'sweetalert2';
+import { Col, Row } from "antd";
+import Swal from "sweetalert2";
 import roomAPI from "../../../../../services/RoomAPI";
-
+import { useDispatch, useSelector } from "react-redux";
+import { getLocations } from "../../../../../slices/locationSlice";
+import Loading from "../../../../../components/Loading/Loading";
 import styles from "./AddRoom.module.scss";
+
 const AddRoom = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getLocations());
+  }, []);
+
+  const { locations, loading } = useSelector((state) => state.locationSlice);
+
   const { register, handleSubmit, formState, reset } = useForm({
     defaultValues: {
       tenPhong: "",
@@ -35,24 +46,27 @@ const AddRoom = () => {
       await roomAPI.createRoom(values);
       reset();
       Swal.fire({
-        title: 'Success!',
-        text: 'Congratulations on your successful',
-        icon: 'success',
-        confirmButtonText: 'Close'
-      })
+        title: "Success!",
+        text: "Congratulations on your successful",
+        icon: "success",
+        confirmButtonText: "Close",
+      });
     } catch (error) {
       Swal.fire({
-        title: 'Error!',
+        title: "Error!",
         text: `${error}`,
-        icon: 'error',
-        confirmButtonText: 'Close'
-      })
+        icon: "error",
+        confirmButtonText: "Close",
+      });
     }
   };
 
+  if (loading) {
+    return <Loading />;
+  }
+  console.log(locations)
   return (
     <div className={styles.wrapAddRoom}>
-
       <h3>AddRoom</h3>
 
       <div className={styles.wrapForm}>
@@ -122,15 +136,21 @@ const AddRoom = () => {
                 </Col>
                 <Col span={8}>
                   <div className={styles.input}>
-                    <label>Location code</label>
-                    <input
+                    <label>Location</label>
+                    <select
                       {...register("maViTri", {
                         required: {
                           value: true,
-                          message: "Location code is required",
-                        }
+                          message: "Location is required",
+                        },
                       })}
-                    />
+                    >
+                      <option value="">Select location </option>
+                      {locations.map((item) => (
+                        <option key={item.id} value={item.id}>{item.tenViTri}</option>
+                      ))}
+                    </select>
+
                     {errors.maViTri && (
                       <p className={styles.txtError}>
                         {errors.maViTri.message}

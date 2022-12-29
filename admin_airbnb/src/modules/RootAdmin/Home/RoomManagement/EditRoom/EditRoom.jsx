@@ -9,16 +9,21 @@ import Loading from "../../../../../components/Loading/Loading";
 import styles from "./EditRoom.module.scss";
 import roomAPI from "../../../../../services/RoomAPI";
 import { handleModalEditRoom } from "../../../../../slices/modalSlice";
+import { getLocations } from "../../../../../slices/locationSlice";
 
 const EditRoom = ({ idRoom }) => {
   const dispatch = useDispatch();
   const { room, loadingRoom } = useSelector((state) => state.roomSlice);
   const { modalEditRoom } = useSelector((state) => state.modalSlice);
-
+  const {locations} = useSelector(state => state.locationSlice)
 
   useEffect(() => {
     dispatch(getRoomById(idRoom));
   }, [idRoom, modalEditRoom]);
+
+  useEffect(() => {
+    dispatch(getLocations());
+  },[])
 
   const { register, handleSubmit, formState, reset, setValue, getValues } = useForm({
     defaultValues: {
@@ -175,20 +180,28 @@ const EditRoom = ({ idRoom }) => {
                 </div>
               </Col>
               <Col span={8}>
-                <div className={styles.input}>
-                  <label>Location code</label>
-                  <input
-                    {...register("maViTri", {
-                      required: {
-                        value: true,
-                        message: "Location code is required",
-                      },
-                    })}
-                  />
-                  {errors.maViTri && (
-                    <p className={styles.txtError}>{errors.maViTri.message}</p>
-                  )}
-                </div>
+              <div className={styles.input}>
+                    <label>Location</label>
+                    <select
+                      {...register("maViTri", {
+                        required: {
+                          value: true,
+                          message: "Location is required",
+                        },
+                      })}
+                    >
+                      <option value="">Select location</option>
+                      {locations.map((item) => (
+                        <option key={item.id} value={item.id}>{item.tenViTri}</option>
+                      ))}
+                    </select>
+
+                    {errors.maViTri && (
+                      <p className={styles.txtError}>
+                        {errors.maViTri.message}
+                      </p>
+                    )}
+                  </div>
               </Col>
               <Col span={8}>
                 <div className={styles.input}>

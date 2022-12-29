@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Col, Row } from "antd";
 import bookingRoomAPI from "../../../../../services/bookingRoomAPI";
-import Swal from 'sweetalert2';
-
+import Swal from "sweetalert2";
+import { useDispatch, useSelector } from "react-redux";
+import Loading from "../../../../../components/Loading/Loading";
 import styles from "./AddBooking.module.scss";
+import { getRooms } from "../../../../../slices/roomSlice";
 
 const AddBookingRoom = () => {
+  const dispatch = useDispatch();
+
+  const { rooms, loading } = useSelector((state) => state.roomSlice);
+
+  useEffect(() => {
+    dispatch(getRooms());
+  }, []);
+
   const { register, handleSubmit, formState, reset } = useForm({
     defaultValues: {
       maPhong: 0,
@@ -21,24 +31,28 @@ const AddBookingRoom = () => {
   const { errors } = formState;
 
   const onSubmit = async (values) => {
-   try {
-    await bookingRoomAPI.createBooking(values);
-    reset();
-    Swal.fire({
-      title: 'Success!',
-      text: 'Congratulations on your successful',
-      icon: 'success',
-      confirmButtonText: 'Close'
-    })
-   } catch (error) {
-    Swal.fire({
-      title: 'Error!',
-      text: `${error}`,
-      icon: 'error',
-      confirmButtonText: 'Close'
-    })
-   }
+    try {
+      await bookingRoomAPI.createBooking(values);
+      reset();
+      Swal.fire({
+        title: "Success!",
+        text: "Congratulations on your successful",
+        icon: "success",
+        confirmButtonText: "Close",
+      });
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: `${error}`,
+        icon: "error",
+        confirmButtonText: "Close",
+      });
+    }
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className={styles.wrapAddBooking}>
@@ -48,19 +62,21 @@ const AddBookingRoom = () => {
           <Row gutter={[20, 20]}>
             <Col span={12}>
               <div className={styles.input}>
-                <label>Room code</label>
-                <input
+                <label>Room </label>
+                <select
                   {...register("maPhong", {
                     required: {
                       value: true,
                       message: "Room name is required",
                     },
-                    pattern: {
-                      value: /^[1-9]|[0-9]{2,}$/,
-                      message: "Room code is integer and greater than 0",
-                    },
                   })}
-                />
+                >
+                  <option value="">Select room</option>
+                  {rooms.map((item) => (
+                    <option value={item.id}>{item.tenPhong}</option>
+                  ))}
+                </select>
+
                 {errors.maPhong && (
                   <p className={styles.txtError}>{errors.maPhong.message}</p>
                 )}

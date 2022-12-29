@@ -19,9 +19,16 @@
       &:focus {
         border-color: #ff5a5f;
       }
-      @media screen and (max-width: 500px) {
-        font-size: 14px;
-        padding: 8px;
+    }
+
+    select {
+      width: 100%;
+      padding: 5px;
+      border-radius: 10px;
+      border: 2px solid black;
+      color: #000;
+      &:focus {
+        border-color: #ff5a5f;
       }
     }
 

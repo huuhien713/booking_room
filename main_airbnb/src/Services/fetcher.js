@@ -20,7 +20,7 @@ fetcher.interceptors.response.use(
 
 fetcher.interceptors.request.use(
     (config) => {
-        const accessToken = JSON.parse(localStorage.getItem('userBooking')).token || '';
+        const accessToken = JSON.parse(localStorage.getItem('userBooking'))?.token || {};
         if (accessToken) {
             config.headers.token = `${accessToken}`
         }

@@ -18,10 +18,6 @@ const Signup = () => {
         dispatch(signup({ ...values, birthday: values.birthday.format('DD/MM/YYYY') }))
     };
 
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-    };
-
     useEffect(() => {
         if (isSignup) {
             Swal.fire({
@@ -52,7 +48,7 @@ const Signup = () => {
             <div className='sm:w-[500px] xs:w-[300px] mx-auto pt-10 pb-20'>
                 <div className='bg-white shadow-3xl pt-4 px-6 pb-6'>
                     <Title className='xs:text-center'>Đăng ký</Title>
-                    <Form size='large' layout='vertical' onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off">
+                    <Form size='large' layout='vertical' onFinish={onFinish} autoComplete="off">
                         <Form.Item label="Name" name="name" className='mb-0' hasFeedback rules={[
                             {
                                 required: true,

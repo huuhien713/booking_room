@@ -21,9 +21,9 @@ const SearchRoom = ({ roomById }) => {
     const { isBook, messageError } = useSelector(state => state.booking);
     const { infoBooking } = useSelector(state => state.room);
 
-    const [time, setTime] = useState({ ngayDen: '', ngayDi: '' });
-    const [people, setPeople] = useState(1);
-    const [children, setChildren] = useState(0);
+    const [ time, setTime ] = useState({ ngayDen: '', ngayDi: '' });
+    const [ people, setPeople ] = useState(1);
+    const [ children, setChildren ] = useState(0);
 
     useEffect(() => {
         dispatch(getAllLocation());
@@ -52,11 +52,14 @@ const SearchRoom = ({ roomById }) => {
                 maPhong: idRoom,
                 ngayDen: time.ngayDen === '' ? day[0].format('YYYY/MM/DD')  : time.ngayDen,
                 ngayDi: time.ngayDi === '' ? day[1].format('YYYY/MM/DD') : time.ngayDi,
-                soLuongKhach: people + children,
+                soLuongKhach:  infoBooking !== null ? infoBooking.soLuongKhach : (people + children),
                 maNguoiDung: user?.user.id,
             }
             dispatch(bookingRoom(info));
             dispatch(setInfoBooking());
+            setTimeout(() => {
+                navigate('/account');
+            }, 1500)
         }
     }
 
@@ -87,7 +90,6 @@ const SearchRoom = ({ roomById }) => {
         return { id: item.id, value: item.tenViTri }
     })
 
-    console.log(dayjs().format('23/12/2023'))
     const content = (
         <div className='w-64'>
             <div className='flex items-center justify-between mb-2'>

@@ -67,10 +67,10 @@ const Signin = () => {
                                 required: true,
                                 message: 'Please input your email!',
                             },
-                            {
-                                pattern: /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i,
-                                message: 'Email không đúng định dạng'
-                            }
+                            // {
+                            //     pattern: /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i,
+                            //     message: 'Email không đúng định dạng'
+                            // }
                         ]}>
                             <Input prefix={<MailOutlined className="site-form-item-icon" />} placeholder="Email" />
                         </Form.Item>
@@ -80,10 +80,10 @@ const Signin = () => {
                                 required: true,
                                 message: 'Please input your password!',
                             },
-                            {
-                                pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                                message: 'Mật khẩu phải tối thiểu 8 ký tự ít nhất một chữ cái viết hoa, một chữ cái viết thường, một số và một ký tự đặc biệt'
-                            }
+                            // {
+                            //     pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                            //     message: 'Mật khẩu phải tối thiểu 8 ký tự ít nhất một chữ cái viết hoa, một chữ cái viết thường, một số và một ký tự đặc biệt'
+                            // }
                         ]}>
                             <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} placeholder="Password" />
                         </Form.Item>

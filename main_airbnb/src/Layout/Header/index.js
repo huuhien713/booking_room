@@ -15,8 +15,10 @@ const Header = () => {
     const { account } = useSelector(state => state.user);
 
     useEffect(() => {
-        dispatch(getUserById(user?.user.id));
-    }, [])
+        if (user) {
+            dispatch(getUserById(user?.user.id));
+        }
+    }, [user, dispatch])
 
     const content = (
         <div className='w-48 !m-[-12px]'>

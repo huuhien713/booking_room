@@ -101,37 +101,4 @@ label.label input[type="file"] {
   box-shadow: 0 0 0 20px grey inset;
 }
 
-@media screen and (max-width: 600px) {
-  
-  .ant-picker-dropdown .ant-picker-date-panel .ant-picker-content {
-    width: auto!important;
-  }
-  .ant-picker-dropdown .ant-picker-date-panel {
-    width: auto!important;
-  }
-  .ant-picker-dropdown .ant-picker-date-panel .ant-picker-body {
-    padding: 4px 10px!important;
-  }
-}
-
-@media screen and (max-width: 500px) {
-  .ant-picker-dropdown .ant-picker-date-panel .ant-picker-content thead tr th {
-    width: fit-content!important;
-  }
-}
-
-@media screen and (max-width: 420px) {
-  .ant-picker-dropdown {
-    width: 100%;
-  }
-  .ant-picker-dropdown .ant-picker-range-wrapper .ant-picker-panel-container {
-    width: 100%;
-  }
-  .ant-picker-dropdown .ant-picker-range-wrapper .ant-picker-panel-container .ant-picker-panel-layout {
-    justify-content: space-around;    
-  }
-  .ant-picker-dropdown .ant-picker-cell {
-    padding: 2px 0;
-  }
-}
 

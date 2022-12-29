@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Typography, Space, Button, Empty, Segmented, Checkbox, Input, Tooltip, Row, Col, Skeleton } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Typography, Space, Button, Empty, Segmented, Checkbox, Input, Tooltip, Skeleton } from 'antd';
 import { MenuOutlined, SearchOutlined, StarOutlined, VerticalAlignBottomOutlined, VerticalAlignTopOutlined } from '@ant-design/icons'
 import { IoBedOutline } from 'react-icons/io5'
 import { TbBath } from 'react-icons/tb'

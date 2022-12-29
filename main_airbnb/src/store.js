@@ -1,4 +1,4 @@
-import {configureStore} from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import authSlice from './Services/Slices/authSlice';
 import bookingSlice from './Services/Slices/bookingSlice';
 import commentSlice from './Services/Slices/commentSlice';
@@ -14,8 +14,12 @@ const store = configureStore({
         user: userSlice,
         comment: commentSlice,
         booking: bookingSlice
-    }, 
+    },
     devTools: true,
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: false
+        })
 });
 
 export default store;

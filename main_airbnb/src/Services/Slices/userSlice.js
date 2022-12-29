@@ -17,6 +17,7 @@ export const getAllAccount = createAsyncThunk(
             return data.content;
         } catch (error) {
             return rejectWithValue(error)
+            // throw(error)
         }
     }
 )
@@ -29,6 +30,7 @@ export const getUserById = createAsyncThunk(
             return data.content;
         } catch (error) {
             return rejectWithValue(error)
+            // throw(error)
         }
     }
 )
@@ -41,6 +43,7 @@ export const updateUser = createAsyncThunk(
             return data.content;
         } catch (error) {
             return rejectWithValue(error)
+            // throw(error)
         }
     }
 )
@@ -53,6 +56,7 @@ export const updateAvatarUser = createAsyncThunk(
             return data.content;
         } catch (error) {
             return rejectWithValue(error)
+            // throw(error)
         }
     }
 )
@@ -77,7 +81,7 @@ const userSlice = createSlice({
             return {...state, isLoading: false, allAccount: action.payload};
         });
         builder.addCase(getAllAccount.rejected, (state, action) => {
-            return {...state, isLoading: false, messageError: action.payload.response.data.content};
+            return {...state, isLoading: false, messageError: action?.payload?.response?.data?.content};
         });
 
         builder.addCase(getUserById.pending, (state) => {
@@ -87,29 +91,27 @@ const userSlice = createSlice({
             return {...state, isLoading: false, account: action.payload};
         });
         builder.addCase(getUserById.rejected, (state, action) => {
-            return {...state, isLoading: false, messageError: action.payload.response.data.content};
+            return {...state, isLoading: false, messageError: action?.payload?.response?.data?.content};
         });
 
         builder.addCase(updateUser.pending, (state) => {
             return {...state, isLoading: true};
         });
         builder.addCase(updateUser.fulfilled, (state, action) => {
-            console.log(action)
             return {...state, isLoading: false, isUpdate: true, account: action.payload};
         });
         builder.addCase(updateUser.rejected, (state, action) => {
-            return {...state, isLoading: false, messageError: action.payload.response.data.content};
+            return {...state, isLoading: false, messageError: action?.payload?.response?.data?.content};
         });
 
         builder.addCase(updateAvatarUser.pending, (state) => {
             return {...state, isLoading: true};
         });
         builder.addCase(updateAvatarUser.fulfilled, (state, action) => {
-            console.log(action)
             return {...state, isLoading: false, isUpdate: true, account: action.payload};
         });
         builder.addCase(updateAvatarUser.rejected, (state, action) => {
-            return {...state, isLoading: false, messageError: action.payload.response.data.content};
+            return {...state, isLoading: false, messageError: action?.payload?.response?.data?.content};
         });
     }
 })

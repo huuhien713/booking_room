@@ -17,6 +17,7 @@ export const signin = createAsyncThunk(
             return data.content;
         } catch (error) {
             return rejectWithValue(error);
+            // throw(error)
         }
     }
 );
@@ -29,6 +30,7 @@ export const signup = createAsyncThunk(
             return data.content;
         } catch (error) {
             return rejectWithValue(error);
+            // throw(error)
         }
     }
 )
@@ -56,7 +58,7 @@ const authSlice = createSlice({
         });
         builder.addCase(signin.rejected, (state, action) => {
             console.log(action);
-            return {...state, isLoading: false, messageError: action.payload.response.data.content};
+            return {...state, isLoading: false, messageError: action.payload?.response?.data?.content};
         });
 
         builder.addCase(signup.pending, (state) => {
@@ -67,7 +69,7 @@ const authSlice = createSlice({
         });
         builder.addCase(signup.rejected, (state, action) => {
             // console.log(action.payload.response.data.content);
-            return {...state, isLoading: false, messageError: action.payload.response.data.content};
+            return {...state, isLoading: false, messageError: action.payload?.response?.data?.content};
         });
     }
 });

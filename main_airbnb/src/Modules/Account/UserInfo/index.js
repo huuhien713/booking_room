@@ -4,8 +4,7 @@ import dayjs from 'dayjs';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
-import { setMessageError } from '../../../Services/Slices/authSlice';
-import { getUserById, setIsUpdate, updateAvatarUser, updateUser } from '../../../Services/Slices/userSlice';
+import { getUserById, setIsUpdate, updateAvatarUser, updateUser, setMessageError } from '../../../Services/Slices/userSlice';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,8 +15,8 @@ const UserInfo = () => {
     const dispatch = useDispatch();
     const { user: idUser } = useSelector(state => state.auth);
     const { account, isUpdate, messageError, isLoading } = useSelector(state => state.user);
-    const [isEdit, setIsEdit] = useState(false);
-    const [avt, setAvt] = useState(false);
+    const [ isEdit, setIsEdit ] = useState(false);
+    const [ avt, setAvt ] = useState(false);
 
     // click edit thông tin user
     const handleEdit = () => {
@@ -38,6 +37,7 @@ const UserInfo = () => {
     const onFinish = (values) => {
         // console.log({ ...values, birthday: values.birthday.format('DD/MM/YYYY'), id: account.id });
         dispatch(updateUser({ ...values, birthday: values.birthday.format('DD/MM/YYYY'), id: account.id }));
+        dispatch(setMessageError());
         setIsEdit(!isEdit)
     };
 
@@ -258,7 +258,9 @@ const UserInfo = () => {
                         </div>
                     </Form>
                     <div className='mt-3'>
-                        <Button onClick={() => navigate('/')} className='h-full bg-blue text-white hover:!text-white'><span className='lg:!text-lg xs:!text-sm'>Quay về trang chủ</span></Button>
+                        <Button onClick={() => navigate('/')} className='h-full bg-blue text-white hover:!text-white'>
+                            <span className='lg:!text-lg xs:!text-sm'>Quay về trang chủ</span>
+                        </Button>
                     </div>
                 </>
             }

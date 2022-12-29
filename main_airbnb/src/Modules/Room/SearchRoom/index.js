@@ -3,15 +3,14 @@ import dayjs from 'dayjs';
 import { Button, DatePicker, Form, Popover, Select, Typography } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllLocation } from '../../../Services/Slices/locationSlice';
-import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { bookingRoom, setIsBook } from '../../../Services/Slices/bookingSlice';
 import { setInfoBooking } from '../../../Services/Slices/roomSlice';
 
-const { RangePicker } = DatePicker;
-const { Text } = Typography;
 
 const SearchRoom = ({ roomById }) => {
+    const { Text } = Typography;
     const { idRoom } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -21,16 +20,20 @@ const SearchRoom = ({ roomById }) => {
     const { isBook, messageError } = useSelector(state => state.booking);
     const { infoBooking } = useSelector(state => state.room);
 
-    const [ time, setTime ] = useState({ ngayDen: '', ngayDi: '' });
-    const [ people, setPeople ] = useState(1);
-    const [ children, setChildren ] = useState(0);
+    const [time, setTime] = useState({ ngayDen: '', ngayDi: '' });
+    const [people, setPeople] = useState(1);
+    const [children, setChildren] = useState(0);
 
     useEffect(() => {
         dispatch(getAllLocation());
     }, []);
 
-    const handleDate = (value) => {
-        setTime({ ngayDen: value[0].format('YYYY/MM/DD'), ngayDi: value[1].format('YYYY/MM/DD') })
+    const handleNgayDen = (dateString) => {
+        setTime((prev) => ({ ...prev, ngayDen: dateString }))
+    };
+
+    const handleNgayDi = (dateString) => {
+        setTime((prev) => ({ ...prev, ngayDi: dateString }))
     };
 
     const onFinish = (value) => {
@@ -47,12 +50,12 @@ const SearchRoom = ({ roomById }) => {
                 navigate(`/signin?redirect=${url}`)
             }, 1500)
         } else {
-            const {day} = value;
+            const { ngayDen, ngayDi } = value;
             const info = {
                 maPhong: idRoom,
-                ngayDen: time.ngayDen === '' ? day[0].format('YYYY/MM/DD')  : time.ngayDen,
-                ngayDi: time.ngayDi === '' ? day[1].format('YYYY/MM/DD') : time.ngayDi,
-                soLuongKhach:  infoBooking !== null ? infoBooking.soLuongKhach : (people + children),
+                ngayDen: time.ngayDen === '' ? ngayDen.format('YYYY/MM/DD') : time.ngayDen,
+                ngayDi: time.ngayDi === '' ? ngayDi.format('YYYY/MM/DD') : time.ngayDi,
+                soLuongKhach: infoBooking !== null ? ((people + children) === 1 ? infoBooking.soLuongKhach : (people + children)) : (people + children),
                 maNguoiDung: user?.user.id,
             }
             dispatch(bookingRoom(info));
@@ -122,12 +125,22 @@ const SearchRoom = ({ roomById }) => {
                     <Form.Item label={'Điểm đến'}>
                         <Select disabled size='large' className='w-full leading-4' placeholder={allLocation?.find(item => item.id === roomById?.maViTri)?.tenViTri} options={options} />
                     </Form.Item>
-                    <Form.Item label={'Số người'} name='day' initialValue={infoBooking !== null ? [dayjs(`${infoBooking.ngayDen}`), dayjs(`${infoBooking.ngayDi}`)] : [dayjs(), dayjs().add(1, 'day')]} className='w-full'>
+                    {/* <Form.Item label={'Ngày đến'} name='ngayDen' className='w-full pr-2' initialValue={infoBooking !== null ? [dayjs(`${infoBooking.ngayDen}`), dayjs(`${infoBooking.ngayDi}`)] : [dayjs(), dayjs().add(1, 'day')]}>
                         <RangePicker className='w-full h-full! px-[24px] py-[8px]' onChange={handleDate} />
-                    </Form.Item>
-                    <Form.Item label={'Số người'} className='w-1/2'>
+                    </Form.Item> */}
+                    <div className='flex items-center'>
+                        <Form.Item label={'Ngày đến'} name='ngayDen' className='w-full pr-2' initialValue={infoBooking !== null ? dayjs(`${infoBooking.ngayDen}`) : dayjs()}>
+                            <DatePicker onChange={handleNgayDen} className='w-full' size='large' />
+                        </Form.Item>
+                        <Form.Item label={'Ngày đi'} name='ngayDi' className='w-full' initialValue={infoBooking !== null ? dayjs(`${infoBooking.ngayDi}`) : dayjs().add(1, 'day')}>
+                            <DatePicker onChange={handleNgayDi} className='w-full' size='large' />
+                        </Form.Item>
+                    </div>
+                    <Form.Item label={'Số người'} className='w-1/2 pr-2'>
                         <Popover showArrow={false} placement='right' content={content} trigger="click">
-                            <Button className='block w-full bg-white' size='large'>{ infoBooking !== null ? infoBooking.soLuongKhach : (people + children)} người</Button>
+                            <Button className='block w-full bg-white' size='large'>
+                                {infoBooking !== null ? ((people + children) === 1 ? infoBooking.soLuongKhach : (people + children)) : (people + children)} người
+                            </Button>
                         </Popover>
                     </Form.Item>
                     <Form.Item className='m-0'>

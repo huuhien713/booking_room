@@ -19,7 +19,7 @@ const RoomDetails = ({ roomById, showModal }) => {
                 <>
                     <div className='flex items-center flex-wrap'>
                         {Array(8).fill(0).map((item, index) => (
-                            <div className='mr-4'>
+                            <div key={index} className='mr-4'>
                                 <Skeleton.Avatar active block shape='square' size={40} className='mb-1' />
                                 <Skeleton active title={{ width: 40 }} paragraph={{ rows: 0, style: { margin: 0 } }} />
                             </div>

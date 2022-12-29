@@ -12,18 +12,17 @@ import { getAllLocation } from '../../Services/Slices/locationSlice';
 import { chonPhong } from '../../Services/Slices/roomSlice';
 import { useNavigate } from 'react-router-dom';
 
-const { Title, Text } = Typography;
-const { RangePicker } = DatePicker;
 
 const SearchBar = () => {
+    const { Title, Text } = Typography;
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { allLocation, isLoading } = useSelector(state => state.location);
 
-    const [people, setPeople] = useState(1);
-    const [children, setChildren] = useState(0);
-    const [idLocation, setIdLocation] = useState(0);
-    const [time, setTime] = useState({ ngayDen: '', ngayDi: '' });
+    const [ people, setPeople ] = useState(1);
+    const [ children, setChildren  ] = useState(0);
+    const [ idLocation, setIdLocation ] = useState(0);
+    const [ time, setTime ] = useState({ ngayDen: dayjs(), ngayDi: dayjs().add(1, 'day') });
 
     useEffect(() => {
         dispatch(getAllLocation())
@@ -33,9 +32,15 @@ const SearchBar = () => {
         setIdLocation(location.id)
     };
 
-    const handleChangeDate = (value) => {
-        setTime({ ngayDen: value[0].format('YYYY/MM/DD'), ngayDi: value[1].format('YYYY/MM/DD') })
+    const handleNgayDen = (dateString) => {
+        setTime((prev) => ({ ...prev, ngayDen: dateString }))
     };
+
+    const handleNgayDi = (dateString) => {
+        setTime((prev) => ({ ...prev, ngayDi: dateString }))
+    };
+
+    console.log(time)
 
     const onFinish = (values) => {
         const info = {
@@ -130,7 +135,15 @@ const SearchBar = () => {
                                         <Select className='w-full mb-4 xs:mb-2' placeholder={'Chọn điểm đến'} onChange={handleChangeLocation} options={options} />
                                     </Form.Item>
                                     <div className='md:grid grid-cols-[2fr_1fr] xs:block gap-3'>
-                                        <RangePicker className='w-full' defaultValue={[dayjs(),]} onChange={handleChangeDate} />
+                                        {/* <RangePicker className='w-full' defaultValue={[dayjs(),]} onChange={handleChangeDate} /> */}
+                                        <div className='flex items-center'>
+                                            <Form.Item name='ngayDen' className='w-full pr-2 mb-0' initialValue={time.ngayDen}>
+                                                <DatePicker onChange={handleNgayDen} className='w-full' size='large' />
+                                            </Form.Item>
+                                            <Form.Item name='ngayDi' className='w-full mb-0' initialValue={time.ngayDi}>
+                                                <DatePicker onChange={handleNgayDi} className='w-full' size='large' />
+                                            </Form.Item>
+                                        </div>
                                         <Popover showArrow={false} placement='bottom' content={content} trigger="click">
                                             <Button className='bg-white block !h-full xs:w-full xs:!p-1 md:mt-0 xs:mt-2' size='large'>{people + children} người</Button>
                                         </Popover>
@@ -174,7 +187,7 @@ const SearchBar = () => {
                                     </div>
                                 </li>
                             </ul>
-                    </>}
+                        </>}
                 </div>
             </div>
         </>

@@ -63,7 +63,7 @@ const SliderComment = ({ roomById }) => {
                     <>
                         <div className={`grid ${screenWidth > 768 ? 'grid-cols-3' : screenWidth >= 500 ? 'grid-cols-2' : 'grid-cols-1'}`}>
                             {Array(screenWidth > 768 ? 3 : screenWidth >= 500 ? 2 : 1).fill(0).map((item, index) => (
-                                <div className='p-2'>
+                                <div key={index} className='p-2'>
                                     <Skeleton.Input className='!w-full !h-[150px]' />
                                 </div>
                             ))}

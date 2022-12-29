@@ -9,6 +9,14 @@ const roomAPI = {
         return fetcher.get(`phong-thue/${id}`);
     },
 
+    getRoomByLocation : (maViTri) => {
+        return fetcher.get("/phong-thue/lay-phong-theo-vi-tri", {
+            params: {
+                maViTri
+            }
+        })
+    },
+
     createRoom: (values) => {
         return fetcher.post("phong-thue", values);
     },

@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import ErrorBoundary from "../components/ErrorBoundary/ErrorBoundary";
+import Loading from "../components/Loading/Loading";
 import NotFound from "../components/NotFound";
 import Access from "../modules/Access/Access";
 import Auth from "../modules/Auth/Auth";

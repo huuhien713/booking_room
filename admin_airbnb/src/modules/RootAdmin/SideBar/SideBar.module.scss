@@ -1,8 +1,10 @@
 .wrapSidebar{
     border-right: 5px solid #edf2f9;
-    min-height: 100vh;
+    height: 100vh;
     max-width: 250px;
     width: 100%;
+    overflow: hidden;
+    overflow-y: auto;
     p{
         margin: 0;
     }

@@ -11,40 +11,54 @@ import {
 import { Table, Modal } from "antd";
 import Swal from "sweetalert2";
 import roomAPI from "../../../../../services/RoomAPI";
-import { handleModalAddImgRoom, handleModalEditRoom } from "../../../../../slices/modalSlice";
+import {
+  handleModalAddImgRoom,
+  handleModalEditRoom,
+} from "../../../../../slices/modalSlice";
 import EditRoom from "../EditRoom/EditRoom";
 import AddImgRoom from "../AddImgRoom/AddImgRoom";
 
 import styles from "./Room.module.scss";
-
-
+import { getLocations } from "../../../../../slices/locationSlice";
+import Loading from "../../../../../components/Loading/Loading";
 
 const Rooms = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // State
   const { rooms, loading } = useSelector((state) => state.roomSlice);
-  const { modalEditRoom, modalAddImgRoom} = useSelector(state => state.modalSlice)
+  const { modalEditRoom, modalAddImgRoom } = useSelector(
+    (state) => state.modalSlice
+  );
+  const { locations, loading: loadingLocation } = useSelector(
+    (state) => state.locationSlice
+  );
 
   const [deletedRoom, setDeletedRoom] = useState(false);
   const [idRoom, setIdRoom] = useState(null);
+  const [searchRoom, setSeargRoom] = useState(null);
 
   useEffect(() => {
     dispatch(getRooms());
   }, [deletedRoom]);
+
+  useEffect(() => {
+    dispatch(getLocations());
+  }, []);
 
   //Modal
   const showModalAddImg = (id) => {
     dispatch(handleModalAddImgRoom());
     setIdRoom(id);
   };
-
   const handleCancelAddImg = () => {
     dispatch(handleModalAddImgRoom());
     setIdRoom(null);
   };
 
   const showModalEditRoom = (id) => {
-    dispatch(handleModalEditRoom())
+    dispatch(handleModalEditRoom());
     setIdRoom(id);
   };
   const handleCancelEditRoom = () => {
@@ -80,6 +94,21 @@ const Rooms = () => {
         })();
       }
     });
+  };
+
+  //SearchRoom
+  const hanleSearchRoom = async (evt) => {
+    if (!evt.target.value) {
+      setSeargRoom(rooms);
+      return;
+    }
+
+    try {
+      const data = await roomAPI.getRoomByLocation(evt.target.value);
+      setSeargRoom(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // Table
@@ -150,7 +179,7 @@ const Rooms = () => {
     },
   ];
 
-  const dataSource = rooms.map((item) => {
+  const dataSource = (searchRoom ? searchRoom : rooms).map((item) => {
     return {
       key: item.id,
       id: item.id,
@@ -168,7 +197,10 @@ const Rooms = () => {
           height="100%"
         />
       ) : (
-        <div className={styles.addImgRoom} onClick={() => showModalAddImg(item.id)}>
+        <div
+          className={styles.addImgRoom}
+          onClick={() => showModalAddImg(item.id)}
+        >
           <div className={styles.iconAddImg}>
             <FileImageOutlined />
           </div>
@@ -208,6 +240,10 @@ const Rooms = () => {
     };
   });
 
+  if (loadingLocation) {
+    return <Loading />;
+  }
+
   return (
     <div>
       <div className={styles.headerRoom}>
@@ -215,7 +251,18 @@ const Rooms = () => {
         <div className={styles.headerRoom}>
           <h4>ROOMS</h4>
           <div className={styles.search}>
-            <input type="text" placeholder="Search rooms" />
+            <select
+              type="text"
+              placeholder="Search rooms"
+              onChange={hanleSearchRoom}
+            >
+              <option value="">All room</option>
+              {locations.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.tenViTri}
+                </option>
+              ))}
+            </select>
             <SearchOutlined />
           </div>
         </div>

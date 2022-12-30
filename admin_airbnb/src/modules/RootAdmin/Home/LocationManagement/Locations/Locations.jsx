@@ -162,7 +162,7 @@ const Locations = () => {
   return (
     <div>
       <div className={styles.wrapLocations}>
-        {/* Header Users */}
+   
         <div className={styles.headerLocations}>
           <h4>Locations</h4>
 
@@ -178,7 +178,7 @@ const Locations = () => {
           </div>
         </div>
 
-        {/* Table Users */}
+        {/* Table */}
         <Table
           dataSource={dataSource}
           columns={columns}

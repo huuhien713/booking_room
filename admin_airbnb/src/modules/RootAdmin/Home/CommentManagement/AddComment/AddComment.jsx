@@ -24,24 +24,26 @@ const AddComment = () => {
       await commentsAPI.createComment(values);
       reset();
       Swal.fire({
-        title: 'Success!',
-        text: 'Congratulations on your successful',
-        icon: 'success',
-        confirmButtonText: 'Close'
-      })
+        title: "Success!",
+        text: "Congratulations on your successful",
+        icon: "success",
+        confirmButtonText: "Close",
+      });
     } catch (error) {
       Swal.fire({
-        title: 'Error!',
+        title: "Error!",
         text: `${error}`,
-        icon: 'error',
-        confirmButtonText: 'Close'
-      })
+        icon: "error",
+        confirmButtonText: "Close",
+      });
     }
   };
 
   return (
     <div className={styles.wrapAddComments}>
-      <h3>AddComment</h3>
+      <div className={styles.headerAddComment}>
+        <h4>ADDING COMMENT</h4>
+      </div>
       <div className={styles.form}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Row gutter={[20, 20]}>
@@ -129,7 +131,7 @@ const AddComment = () => {
               <div className={styles.input}>
                 <label>Start comment</label>
                 <input
-                type="number"
+                  type="number"
                   {...register("saoBinhLuan", {
                     required: {
                       value: true,
@@ -137,12 +139,14 @@ const AddComment = () => {
                     },
                     pattern: {
                       value: /^[0-5]$/,
-                      message: "Start is from 0 to 5"
-                    }
+                      message: "Start is from 0 to 5",
+                    },
                   })}
                 />
                 {errors.saoBinhLuan && (
-                  <p className={styles.txtError}>{errors.saoBinhLuan.message}</p>
+                  <p className={styles.txtError}>
+                    {errors.saoBinhLuan.message}
+                  </p>
                 )}
               </div>
             </Col>

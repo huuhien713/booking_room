@@ -44,31 +44,33 @@ const routes = createBrowserRouter([
     element: (
       <Protected>
         <RootAdmin />
-      </Protected> 
+      </Protected>
     ),
     errorElement: <ErrorBoundary />,
     children: [
-        { path: "/admin", element: <Home />,children: [
-            // User
-            {path:"/admin/users", element: <Users />},
-            {path:"/admin/addUser",element: <AddUser />},
-            {path:"/admin/users/:id", element: <UserId />},
-            // Room
-            {path:"/admin/rooms",element: <Rooms />},
-            {path:"/admin/addRoom",element: <AddRoom />},
+      { path: "/admin", element: <Home /> },
 
-            // Booking
-            {path:"/admin/bookedRoom",element: <BookedRoom />},
-            {path:"/admin/bookingRoom",element: <AddBookingRoom />},
+      // User
+      { path: "/admin/users", element: <Users /> },
+      { path: "/admin/addUser", element: <AddUser /> },
+      { path: "/admin/users/:id", element: <UserId /> },
 
-            // Comment
-            {path:"/admin/comments",element: <Comments />},
-            {path:"/admin/addComment",element: <AddComment />},
-            // Location
-            {path:"/admin/locations",element: <Locations />},
-            {path:"/admin/addLocation",element: <AddLocation />}
-        ]},
-    ]
+      // Room
+      { path: "/admin/rooms", element: <Rooms /> },
+      { path: "/admin/addRoom", element: <AddRoom /> },
+
+      // Booking
+      { path: "/admin/bookedRoom", element: <BookedRoom /> },
+      { path: "/admin/bookingRoom", element: <AddBookingRoom /> },
+
+      // Comment
+      { path: "/admin/comments", element: <Comments /> },
+      { path: "/admin/addComment", element: <AddComment /> },
+
+      // Location
+      { path: "/admin/locations", element: <Locations /> },
+      { path: "/admin/addLocation", element: <AddLocation /> },
+    ],
   },
   { path: "*", element: <NotFound /> },
 ]);

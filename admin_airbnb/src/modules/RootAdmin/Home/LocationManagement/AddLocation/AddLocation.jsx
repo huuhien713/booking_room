@@ -1,20 +1,19 @@
-import React from 'react';
+import React from "react";
 import { useForm } from "react-hook-form";
 import { Col, Row } from "antd";
 import Swal from "sweetalert2";
 
-import locationsAPI from '../../../../../services/locationsAPI';
+import locationsAPI from "../../../../../services/locationsAPI";
 import styles from "./AddLocation.module.scss";
 
 const AddLocation = () => {
-  
   const { register, handleSubmit, formState, reset } = useForm({
     defaultValues: {
       tenViTri: "",
       tinhThanh: "",
       quocGia: "",
       hinhAnh: "",
-    }
+    },
   });
 
   const { errors } = formState;
@@ -24,29 +23,31 @@ const AddLocation = () => {
       await locationsAPI.createLocation(values);
       reset();
       Swal.fire({
-        title: 'Success!',
-        text: 'Congratulations on your successful',
-        icon: 'success',
-        confirmButtonText: 'Close'
-      })
+        title: "Success!",
+        text: "Congratulations on your successful",
+        icon: "success",
+        confirmButtonText: "Close",
+      });
     } catch (error) {
       Swal.fire({
-        title: 'Error!',
+        title: "Error!",
         text: `${error}`,
-        icon: 'error',
-        confirmButtonText: 'Close'
-      })
+        icon: "error",
+        confirmButtonText: "Close",
+      });
     }
-  }
+  };
 
   return (
     <div className={styles.wrapAddLocation}>
-      <h3>AddLocation</h3>
+      <div className={styles.headerAddLocation}>
+        <h4>ADDING LOCATION</h4>
+      </div>
       <div className={styles.form}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Row gutter={[20, 20]}>
             <Col span={12}>
-            <div className={styles.input}>
+              <div className={styles.input}>
                 <label>Location name</label>
                 <input
                   {...register("tenViTri", {
@@ -57,14 +58,12 @@ const AddLocation = () => {
                   })}
                 />
                 {errors.tenViTri && (
-                  <p className={styles.txtError}>
-                    {errors.tenViTri.message}
-                  </p>
+                  <p className={styles.txtError}>{errors.tenViTri.message}</p>
                 )}
               </div>
             </Col>
             <Col span={12}>
-            <div className={styles.input}>
+              <div className={styles.input}>
                 <label>Province name</label>
                 <input
                   {...register("tinhThanh", {
@@ -75,14 +74,12 @@ const AddLocation = () => {
                   })}
                 />
                 {errors.tinhThanh && (
-                  <p className={styles.txtError}>
-                    {errors.tinhThanh.message}
-                  </p>
+                  <p className={styles.txtError}>{errors.tinhThanh.message}</p>
                 )}
               </div>
             </Col>
             <Col span={12}>
-            <div className={styles.input}>
+              <div className={styles.input}>
                 <label>Country name</label>
                 <input
                   {...register("quocGia", {
@@ -93,9 +90,7 @@ const AddLocation = () => {
                   })}
                 />
                 {errors.quocGia && (
-                  <p className={styles.txtError}>
-                    {errors.quocGia.message}
-                  </p>
+                  <p className={styles.txtError}>{errors.quocGia.message}</p>
                 )}
               </div>
             </Col>

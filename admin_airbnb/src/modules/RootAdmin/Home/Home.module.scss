@@ -1,0 +1,35 @@
+.wrapHome {
+  padding: 10px;
+  .headerHomeAdmin {
+    padding: 14px 20px;
+    border: 2px solid transparent;
+    margin: 10px 0 30px;
+    border-radius: 10px;
+    background-color: #fff;
+    h4 {
+      letter-spacing: 2px;
+      margin: 0;
+    }
+  }
+
+  .contentHome {
+    border-radius: 10px;
+
+    .group {
+      width: 100%;
+      background-color: #fff;
+      height: 290px;
+      text-align: center;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      @media screen and (max-width: 1024px) {
+        height: 220px;
+      }
+
+      .contentGroup {
+      }
+    }
+  }
+}

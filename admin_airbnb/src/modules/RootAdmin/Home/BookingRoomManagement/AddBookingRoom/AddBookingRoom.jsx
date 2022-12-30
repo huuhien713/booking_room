@@ -56,7 +56,9 @@ const AddBookingRoom = () => {
 
   return (
     <div className={styles.wrapAddBooking}>
-      <h3>AddBookingRoom</h3>
+      <div className={styles.headerAddBooking}>
+        <h4>ADDING BOOKING ROOM</h4>
+      </div>
       <div className={styles.form}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Row gutter={[20, 20]}>
@@ -64,6 +66,7 @@ const AddBookingRoom = () => {
               <div className={styles.input}>
                 <label>Room </label>
                 <select
+                placeholder="Select room"
                   {...register("maPhong", {
                     required: {
                       value: true,
@@ -71,7 +74,7 @@ const AddBookingRoom = () => {
                     },
                   })}
                 >
-                  <option value="">Select room</option>
+                  <option value="" >Select room</option>
                   {rooms.map((item) => (
                     <option value={item.id}>{item.tenPhong}</option>
                   ))}

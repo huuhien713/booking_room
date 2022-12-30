@@ -8,7 +8,7 @@ import {
   EditOutlined,
   FileImageOutlined,
 } from "@ant-design/icons";
-import { Table, Modal, Image  } from "antd";
+import { Table, Modal, Image } from "antd";
 import Swal from "sweetalert2";
 import roomAPI from "../../../../../services/RoomAPI";
 import {
@@ -21,6 +21,7 @@ import AddImgRoom from "../AddImgRoom/AddImgRoom";
 import styles from "./Room.module.scss";
 import { getLocations } from "../../../../../slices/locationSlice";
 import Loading from "../../../../../components/Loading/Loading";
+
 
 const Rooms = () => {
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ const Rooms = () => {
   const [deletedRoom, setDeletedRoom] = useState(false);
   const [idRoom, setIdRoom] = useState(null);
   const [searchRoom, setSeargRoom] = useState(null);
+
 
   useEffect(() => {
     dispatch(getRooms());
@@ -126,22 +128,10 @@ const Rooms = () => {
       width: 180,
     },
     {
-      title: "Bed room",
-      dataIndex: "bedroom",
-      key: "bedroom",
-      width: 50,
-    },
-    {
-      title: "Bed",
-      dataIndex: "bed",
-      key: "Bed",
-      width: 50,
-    },
-    {
-      title: "Bathroom",
-      dataIndex: "bathroom",
-      key: "bathroom",
-      width: 50,
+      title: "Rooms of house",
+      dataIndex: "roomsOfHose",
+      key: "roomsOfHose",
+      width: 130,
     },
     {
       title: "Price",
@@ -153,7 +143,7 @@ const Rooms = () => {
       title: "Location Code",
       dataIndex: "locationCode",
       key: "locationCode",
-      width: 75,
+      width: 130,
     },
     {
       title: "Image",
@@ -184,18 +174,21 @@ const Rooms = () => {
       key: item.id,
       id: item.id,
       name: item.tenPhong,
-      bedroom: item.phongNgu,
-      bed: item.giuong,
-      bathroom: item.phongTam,
+      roomsOfHose: (
+        <div className={styles.roomsOfHose}>
+          <p>Bedroom: {item.phongNgu}</p>
+          <p>Bed: {item.giuong}</p>
+          <p>Bathroom: {item.phongTam}</p>
+        </div>
+      ),
       price: `${item.giaTien} $`,
       locationCode: item.maViTri,
       image: item.hinhAnh ? (
         <Image
-        // width={200}
-        src={item.hinhAnh}
-        alt={item.tenPhong}
-      />
-
+          // width={200}
+          src={item.hinhAnh}
+          alt={item.tenPhong}
+        />
       ) : (
         <div
           className={styles.addImgRoom}
@@ -267,7 +260,6 @@ const Rooms = () => {
         </div>
 
         {/* Table */}
-        <div className={styles.wrapTable}>
         <Table
           dataSource={dataSource}
           columns={columns}
@@ -277,12 +269,9 @@ const Rooms = () => {
             position: ["bottomCenter"],
           }}
           scroll={{
-            y: 510,
-            // x: 1500,
+            y: 535,
           }}
-          // className={styles.tableRoom}
         />
-        </div>
 
         {/* Modal */}
         <Modal

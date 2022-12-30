@@ -9,6 +9,7 @@ import styles from "./RootAdmin.module.scss";
 const RootAdmin = () => {
 
   return (
+
     <div className={styles.rootAdmin}>
       <div className={styles.SideBar}>
         <SideBar />
@@ -22,6 +23,8 @@ const RootAdmin = () => {
         </div>
       </div>
     </div>
+
+  
 
 
   );

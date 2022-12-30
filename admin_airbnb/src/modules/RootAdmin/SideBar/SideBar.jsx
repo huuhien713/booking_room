@@ -104,7 +104,6 @@ const SideBar = () => {
         ""
       ) : (
         <div className={styles.detailAdmin}>
-          {console.log(admin)}
           <div className={styles.avatar}>
             <img src={admin.avatar} alt="avatar" />
           </div>

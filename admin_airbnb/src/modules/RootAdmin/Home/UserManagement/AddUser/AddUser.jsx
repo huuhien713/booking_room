@@ -7,7 +7,7 @@ import userAPI from "../../../../../services/userAPI";
 import styles from "./AddUser.module.scss";
 
 const AddUser = () => {
-  const { register, handleSubmit, formState} = useForm({
+  const { register, handleSubmit, formState } = useForm({
     defaultValues: {
       name: "",
       email: "",
@@ -43,7 +43,9 @@ const AddUser = () => {
 
   return (
     <div className={styles.wrapAddUser}>
-      <h2>Adding User</h2>
+      <div className={styles.headerAddUser}>
+        <h4>Adding User</h4>
+      </div>
       <div className={styles.wrapForm}>
         <Row justify="center">
           <Col span={20}>

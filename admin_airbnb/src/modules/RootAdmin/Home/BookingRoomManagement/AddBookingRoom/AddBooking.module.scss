@@ -1,7 +1,22 @@
 .wrapAddBooking {
   padding: 10px;
+  .headerAddBooking{
+    padding: 14px 20px ;
+    border: 2px solid transparent;
+    margin: 10px 0 30px;
+    border-radius: 10px;
+    background-color: #fff;
+    h4{
+      letter-spacing: 2px;
+      margin: 0;
+    }
+  }
+
   .form {
-    padding: 30px 30px;
+    padding: 53px 30px;
+    border: 2px solid transparent;
+    background-color: #fff;
+    border-radius: 10px;
     .input {
         
       label {

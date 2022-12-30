@@ -67,7 +67,10 @@ const AddRoom = () => {
   console.log(locations)
   return (
     <div className={styles.wrapAddRoom}>
-      <h3>AddRoom</h3>
+
+      <div className={styles.headerAddRoom}>
+        <h4>ADDING ROOM</h4>
+      </div>
 
       <div className={styles.wrapForm}>
         <form onSubmit={handleSubmit(onSubmit)}>

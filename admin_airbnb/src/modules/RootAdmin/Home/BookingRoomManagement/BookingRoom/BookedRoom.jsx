@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getBookingRooms } from "../../../../../slices/bookingRoomSlice";
+import {
+  getBookingByUser,
+  getBookingRooms,
+} from "../../../../../slices/bookingRoomSlice";
 import { Table, Modal } from "antd";
 import {
   SearchOutlined,
@@ -20,6 +23,7 @@ const BookedRoom = () => {
   const { bookingRooms, loading } = useSelector(
     (state) => state.bookingRoomSlice
   );
+
   const { modalEditBooking } = useSelector((state) => state.modalSlice);
 
   const [deletedBooking, setDeletedBooking] = useState(false);
@@ -57,10 +61,23 @@ const BookedRoom = () => {
   };
 
   //Modal
-
   const handleCancel = () => {
     dispatch(handleModalEditBooking());
-  }
+  };
+
+  const handleSearch = (evt) => {
+    if (evt.key !== "Enter") return;
+    console.log(evt.target.value)
+    if (!evt.target.value) {
+      dispatch(getBookingRooms());
+    }
+
+    dispatch(getBookingByUser(evt.target.value));
+  };
+
+  const handleSearchAll = () => {
+    dispatch(getBookingRooms());
+  };
 
   // table
   const columns = [
@@ -133,10 +150,21 @@ const BookedRoom = () => {
     <div className={styles.wrapBooking}>
       {/* Header Users */}
       <div className={styles.headerBooking}>
-        <h3>Booking Room</h3>
-        <div className={styles.search}>
-          <input type="text" placeholder="Search users" />
-          <SearchOutlined />
+        <h4>Booking Room</h4>
+        <div className={styles.wrapSearch}>
+          <div className={styles.btnSearchAll}>
+            <button onClick={handleSearchAll}>All</button>
+          </div>
+          <div className={styles.search}>
+            <input
+              type="text"
+              placeholder="Fill out ID user 'Enter' "
+              onKeyDown={handleSearch}
+            />
+            <div className={styles.iconSearch}>
+              <SearchOutlined />
+            </div>
+          </div>
         </div>
       </div>
 

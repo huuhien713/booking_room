@@ -8,7 +8,7 @@ import {
   EditOutlined,
   FileImageOutlined,
 } from "@ant-design/icons";
-import { Table, Modal } from "antd";
+import { Table, Modal, Image  } from "antd";
 import Swal from "sweetalert2";
 import roomAPI from "../../../../../services/RoomAPI";
 import {
@@ -24,7 +24,7 @@ import Loading from "../../../../../components/Loading/Loading";
 
 const Rooms = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
 
   // State
   const { rooms, loading } = useSelector((state) => state.roomSlice);
@@ -123,7 +123,7 @@ const Rooms = () => {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      width: 200,
+      width: 180,
     },
     {
       title: "Bed room",
@@ -190,12 +190,12 @@ const Rooms = () => {
       price: `${item.giaTien} $`,
       locationCode: item.maViTri,
       image: item.hinhAnh ? (
-        <img
-          src={item.hinhAnh}
-          alt={item.tenPhong}
-          width="100%"
-          height="100%"
-        />
+        <Image
+        // width={200}
+        src={item.hinhAnh}
+        alt={item.tenPhong}
+      />
+
       ) : (
         <div
           className={styles.addImgRoom}
@@ -224,7 +224,6 @@ const Rooms = () => {
         <div className={styles.action}>
           <div
             className={styles.iconEdit}
-            // onClick={() => navigate(`/admin/rooms/${item.id}`)}
             onClick={() => showModalEditRoom(item.id)}
           >
             <EditOutlined />
@@ -268,6 +267,7 @@ const Rooms = () => {
         </div>
 
         {/* Table */}
+        <div className={styles.wrapTable}>
         <Table
           dataSource={dataSource}
           columns={columns}
@@ -277,10 +277,12 @@ const Rooms = () => {
             position: ["bottomCenter"],
           }}
           scroll={{
-            y: 500,
-            // x: 700,
+            y: 510,
+            // x: 1500,
           }}
+          // className={styles.tableRoom}
         />
+        </div>
 
         {/* Modal */}
         <Modal

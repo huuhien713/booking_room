@@ -21,6 +21,7 @@ const EditRoom = ({ idRoom }) => {
     dispatch(getRoomById(idRoom));
   }, [idRoom, modalEditRoom]);
 
+
   const { register, handleSubmit, formState, reset, setValue, getValues } = useForm({
     defaultValues: {
       tenPhong: "",

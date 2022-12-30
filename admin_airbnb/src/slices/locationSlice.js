@@ -5,6 +5,10 @@ const initialState = {
     locations : [],
     loading: false,
     error: null,
+
+    locationById: null,
+    loadingLocationById: false,
+    errorLocationById: null,
 }
 
 export const getLocations = createAsyncThunk(
@@ -13,6 +17,18 @@ export const getLocations = createAsyncThunk(
         try {
             const data = await locationsAPI.getLocations();
         return data;
+        } catch (error) {
+            throw error;
+        }
+    }
+)
+
+export const getLocationById = createAsyncThunk(
+    "locations/getLocationById",
+    async (id) => {
+        try {
+            const data = await locationsAPI.getLocationById(id);
+            return data;
         } catch (error) {
             throw error;
         }
@@ -32,6 +48,16 @@ const locationSlice = createSlice({
         });
         builder.addCase(getLocations.rejected, (state,action) => {
             return {...state, loading: false, error: action.error.message};
+        });
+
+        builder.addCase(getLocationById.pending, (state,action) => {
+            return {...state, loadingLocationById: true};
+        });
+        builder.addCase(getLocationById.fulfilled, (state,action) => {
+            return {...state, loadingLocationById: false, locationById: action.payload};
+        });
+        builder.addCase(getLocationById.rejected, (state,action) => {
+            return {...state, loadingLocationById: false, errorLocationById: action.error.message};
         });
     },
 })

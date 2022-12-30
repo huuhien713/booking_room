@@ -6,31 +6,35 @@ import {
   EditOutlined,
   FileImageOutlined,
 } from "@ant-design/icons";
-import { Table, Modal } from "antd";
-import { getLocations } from "../../../../../slices/locationSlice";
+import { Table, Modal, Image } from "antd";
+import {
+  getLocationById,
+  getLocations,
+} from "../../../../../slices/locationSlice";
 import Swal from "sweetalert2";
-// import { useForm } from "react-hook-form";
 import locationsAPI from "../../../../../services/locationsAPI";
 
 import styles from "./Locations.module.scss";
 import EditLocation from "../EditLocation/EditLocation";
-import { handleModalAddImgLocation, handleModalEditLocation } from "../../../../../slices/modalSlice";
+import {
+  handleModalAddImgLocation,
+  handleModalEditLocation,
+} from "../../../../../slices/modalSlice";
 import AddImgLocation from "../AddImgLocation/AddImgLocation";
 
 const Locations = () => {
   const dispatch = useDispatch();
   const { locations, loading } = useSelector((state) => state.locationSlice);
-  const { modalEditLocation, modalAddImgLocation } = useSelector(state => state.modalSlice);
+  const { modalEditLocation, modalAddImgLocation } = useSelector(
+    (state) => state.modalSlice
+  );
 
   const [deletedLocation, setDeletedLocation] = useState(false);
-  const [addImgLocationSuc, setAddImgLocationSuc] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [idLocation, setIdLocation] = useState(null);
-  // const [imgPreview, setImgPreview] = useState(null);
 
   useEffect(() => {
     dispatch(getLocations());
-  }, [deletedLocation, addImgLocationSuc]);
+  }, [deletedLocation]);
 
   const deleteLocation = (id) => {
     Swal.fire({
@@ -63,17 +67,22 @@ const Locations = () => {
   //Modal
   const showModal = (id) => {
     dispatch(handleModalAddImgLocation());
-    // setIsModalOpen(true);
+
     setIdLocation(id);
   };
 
   const handleCancel = () => {
     dispatch(handleModalAddImgLocation());
-    // setIsModalOpen(false);
+
     setIdLocation(null);
-    // setImgPreview(null);
   };
 
+  // Search
+  const handleSearch = (evt) => {
+    if (evt.key !== "Enter") return;
+
+    dispatch(getLocationById(evt.target.value));
+  };
 
   //Table
   const columns = [
@@ -119,16 +128,14 @@ const Locations = () => {
       countryName: item.quocGia,
       image: item.hinhAnh ? (
         <div className={styles.imgLocation}>
-          <img
-            src={item.hinhAnh}
-            alt={item.tenViTri}
-            width="100%"
-            height="100%"
-          />
+          <Image src={item.hinhAnh} width={200} />
         </div>
       ) : (
-        <div className={styles.addImgLocation} onClick={() => showModal(item.id)}>
-          <div className={styles.iconAddImg} >
+        <div
+          className={styles.addImgLocation}
+          onClick={() => showModal(item.id)}
+        >
+          <div className={styles.iconAddImg}>
             <FileImageOutlined />
           </div>
           <p>Add image</p>
@@ -136,7 +143,10 @@ const Locations = () => {
       ),
       action: (
         <div className={styles.action}>
-          <div className={styles.iconEdit} onClick={() =>dispatch(handleModalEditLocation(item))}>
+          <div
+            className={styles.iconEdit}
+            onClick={() => dispatch(handleModalEditLocation(item))}
+          >
             <EditOutlined />
           </div>
           <div
@@ -154,10 +164,17 @@ const Locations = () => {
       <div className={styles.wrapLocations}>
         {/* Header Users */}
         <div className={styles.headerLocations}>
-          <h3>Locations</h3>
+          <h4>Locations</h4>
+
           <div className={styles.search}>
-            <input type="text" placeholder="Search locations" />
-            <SearchOutlined />
+            <input
+              type="text"
+              placeholder="Fill out ID Location 'Enter' "
+              onKeyDown={handleSearch}
+            />
+            <div className={styles.iconSearch}>
+              <SearchOutlined />
+            </div>
           </div>
         </div>
 
@@ -171,7 +188,7 @@ const Locations = () => {
             position: ["bottomCenter"],
           }}
           scroll={{
-            y: 550,
+            y: 530,
           }}
         />
 
@@ -184,16 +201,6 @@ const Locations = () => {
           footer={null}
           onCancel={handleCancel}
         >
-          {/* <div className={styles.addImgLocation}>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <input type="file" onChange={handleImg} />
-              <button className={styles.btnImgPreview}>Submit</button>
-            </form>
-
-            <div className={styles.imgPreview}>
-              {imgPreview && <img src={imgPreview} alt="imgPreview" />}
-            </div>
-          </div> */}
           <AddImgLocation idLocation={idLocation} />
         </Modal>
 

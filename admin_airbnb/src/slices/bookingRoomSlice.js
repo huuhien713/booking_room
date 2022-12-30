@@ -9,6 +9,8 @@ const initialState = {
     booking :null,
     loadingBooking: false,
     errorBooking: null,
+
+
 }
 
 export const getBookingRooms = createAsyncThunk(
@@ -28,6 +30,18 @@ export const getBookingById = createAsyncThunk(
     async (id) => {
         try {
             const data = await bookingRoomAPI.getBookingById(id);
+            return data;
+        } catch (error) {
+            throw error;
+        }
+    }
+)
+
+export const getBookingByUser = createAsyncThunk(
+    "bookingRoom/getBookingByUser",
+    async (idUser) => {
+        try {
+            const data = await bookingRoomAPI.getBookingByUser(idUser);
             return data;
         } catch (error) {
             throw error;
@@ -59,6 +73,17 @@ const bookingRoomSlice = createSlice({
         });
         builder.addCase(getBookingById.rejected, (state,action) => {
             return {...state, loadingBooking: false, error: action.error.message};
+        });
+
+        //Get booking by user
+        builder.addCase(getBookingByUser.pending, (state,action) => {
+            return {...state, loading: true};
+        });
+        builder.addCase(getBookingByUser.fulfilled, (state,action) => {
+            return {...state, loading: false, bookingRooms: action.payload};
+        });
+        builder.addCase(getBookingByUser.rejected, (state,action) => {
+            return {...state, loading: false, error: action.error.message};
         });
     }
 })

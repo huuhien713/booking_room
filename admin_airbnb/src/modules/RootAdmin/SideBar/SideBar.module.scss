@@ -1,19 +1,39 @@
-.wrapSidebar{
-    border-right: 5px solid #edf2f9;
-    height: 100vh;
-    max-width: 250px;
-    width: 100%;
-    overflow: hidden;
-    overflow-y: auto;
-    p{
-        margin: 0;
+:global{
+    .ant-menu{
+        border-radius: 10px;
     }
-    .logo{
-        width: 230px;
-        margin-bottom: 20px;
-        transition: all 0.5s ease;
-        img{
-            width: 100%;
-        }
+}
+.wrapSidebar {
+  border-right: 5px solid #edf2f9;
+  max-width: 250px;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  overflow-y: auto;
+  p {
+    margin: 0;
+  }
+
+  .detailAdmin {
+    .avatar {
+      margin-bottom: 10px;
+      img {
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+      }
     }
+    margin: 10px;
+    text-align: center;
+    padding: 20px;
+    background-color: #fff;
+    border: 2px solid transparent;
+    border-radius:15px 30% 15px 30% ;
+  }
+
+  .wrapMenu{
+    margin: 0 10px;
+    border-radius: 20px;
+    
+  }
 }

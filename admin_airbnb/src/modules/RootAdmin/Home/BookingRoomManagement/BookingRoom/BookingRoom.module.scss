@@ -3,21 +3,52 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 5px 20px 20px ;
-        .search{
-            border: 2px solid black;
-            border-radius: 15px;
-            padding: 5px;
-
-            input{
-                border: none;
-                padding: 5px 10px;
+        padding: 12px 20px ;
+        border: 2px solid transparent;
+        margin: 10px 0 30px;
+        border-radius: 10px;
+        background-color: #fff;
+        h4{
+            margin: 0;
+        }
+        .wrapSearch{
+            display: flex;
+            align-items: center;
+            .btnSearchAll{
+                padding: 0 10px;
+                button {
+                    padding: 8px 20px;
+                    border-radius: 10px;
+                    border: 2px solid #ff5459;
+                    background-color: #fff;
+                    color: #ff5459;
+                    font-weight: 600;
+                    letter-spacing: 2px;
+                    &:hover{
+                        border-color: #ff5459;
+                        background-color: #ff5459;
+                        color: #fff;
+                    }
+                }
             }
-            span{
-                margin: 5px;
-                cursor: pointer;
-                svg{
-                    font-size: 20px;
+            .search{
+                border: 2px solid black;
+                border-radius: 15px;
+                padding: 5px;
+                display: flex;
+                &:hover{
+                    border-color: #ff5459;
+                }
+                input{
+                    border: none;
+                    padding: 5px 10px;
+                }
+                span{
+                    margin: 5px;
+                    cursor: pointer;
+                    svg{
+                        font-size: 20px;
+                    }
                 }
             }
         }

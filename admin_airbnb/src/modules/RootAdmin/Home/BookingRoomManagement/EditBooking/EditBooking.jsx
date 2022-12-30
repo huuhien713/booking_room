@@ -25,10 +25,6 @@ const EditBooking = () => {
 
   useEffect(() => {
     dispatch(getRooms());
-
-    return () => {
-      console.log("component didmount")
-    }
   },[])
 
   // Form

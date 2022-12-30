@@ -1,10 +1,9 @@
 .rootAdmin{
     display: flex;
     background-color: #edf2f9;
-    box-shadow: 0 0 10px black;
-    max-width: 100%;
+    // min-width: 100%;
     width: 100%;
-    max-height: 100vh;
+    min-height: 100vh;
     height: 100%;
     .content{
         width: 100%;

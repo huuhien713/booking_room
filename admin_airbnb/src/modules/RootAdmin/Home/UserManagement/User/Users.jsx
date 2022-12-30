@@ -171,7 +171,7 @@ const Users = () => {
     <div className={styles.wrapUsers}>
       {/* Header Users */}
       <div className={styles.headerUser}>
-        <h3>USERS</h3>
+        <h4>USERS</h4>
         <div className={styles.search}>
           <input
             ref={timeoutRef}

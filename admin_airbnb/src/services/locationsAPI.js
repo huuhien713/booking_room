@@ -5,6 +5,10 @@ const locationsAPI = {
         return fetcher.get("vi-tri");
     },
 
+    getLocationById : (id) => {
+        return fetcher.get(`vi-tri/${id}`);
+    },
+
     createLocation : (values) => {
         return fetcher.post("vi-tri", values);
     },

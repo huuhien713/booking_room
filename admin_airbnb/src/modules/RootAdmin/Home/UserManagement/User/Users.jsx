@@ -5,8 +5,9 @@ import {
   SearchOutlined,
   DeleteOutlined,
   EditOutlined,
+  ContactsOutlined,
 } from "@ant-design/icons";
-import { Table, Modal } from "antd";
+import { Table, Modal, Tooltip } from "antd";
 import Swal from "sweetalert2";
 import userAPI from "../../../../../services/userAPI";
 import { useNavigate } from "react-router-dom";
@@ -22,7 +23,7 @@ const Users = () => {
 
   const { users, loading } = useSelector((state) => state.userSlice);
   const { modalEditUser } = useSelector((state) => state.modalSlice);
-  
+
   const [searchTerm, setSearchTerm] = useState(null);
   const [deletedUser, setDeletedUser] = useState(false);
   const [idUser, setIdUser] = useState(null);
@@ -35,7 +36,7 @@ const Users = () => {
     timeoutRef.current = setTimeout(() => {
       (async () => {
         try {
-          if(!evt.target.value){
+          if (!evt.target.value) {
             setSearchTerm(users);
           }
           const data = await userAPI.SearchUsers(evt.target.value);
@@ -131,37 +132,43 @@ const Users = () => {
     },
   ];
 
-  const dataSource = (searchTerm ? searchTerm : users).map(
-    (user, index) => {
-      return {
-        key: user.id,
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        birthday: user.birthday,
-        gender: `${user.gender}`,
-        role: user.role,
-        action: (
-          <div className={styles.action}>
-            <div
-              className={styles.iconEdit}
-              // onClick={() => navigate(`/admin/users/${user.id}`)}
-              onClick={() => showModal(user.id)}
-            >
+  const dataSource = (searchTerm ? searchTerm : users).map((user, index) => {
+    return {
+      key: user.id,
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      birthday: user.birthday,
+      gender: `${user.gender}`,
+      role: user.role,
+      action: (
+        <div className={styles.action}>
+          <Tooltip placement="bottom" title="Edit">
+            <div className={styles.iconEdit} onClick={() => showModal(user.id)}>
               <EditOutlined />
             </div>
+          </Tooltip>
+          <Tooltip placement="bottom" title="Delete">
             <div
               className={styles.iconDelete}
               onClick={() => deleteUser(user.id)}
             >
               <DeleteOutlined />
             </div>
-          </div>
-        ),
-      };
-    }
-  );
+          </Tooltip>
 
+          <Tooltip placement="bottom" title="Detail">
+            <div
+              className={styles.iconDetailUser}
+              onClick={() => navigate(`/admin/users/${user.id}`)}
+            >
+              <ContactsOutlined />
+            </div>
+          </Tooltip>
+        </div>
+      ),
+    };
+  });
 
   if (loading) {
     return <Loading />;

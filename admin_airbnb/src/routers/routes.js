@@ -1,32 +1,50 @@
+import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import ErrorBoundary from "../components/ErrorBoundary/ErrorBoundary";
-import Loading from "../components/Loading/Loading";
 import NotFound from "../components/NotFound";
 import Access from "../modules/Access/Access";
-import Auth from "../modules/Auth/Auth";
-import Login from "../modules/Auth/Login/Login";
-import Register from "../modules/Auth/Resgister/Register";
-import RootAdmin from "../modules/RootAdmin";
-import AddBookingRoom from "../modules/RootAdmin/Home/BookingRoomManagement/AddBookingRoom/AddBookingRoom";
-import BookedRoom from "../modules/RootAdmin/Home/BookingRoomManagement/BookingRoom/BookedRoom";
-
-import AddComment from "../modules/RootAdmin/Home/CommentManagement/AddComment/AddComment";
-import Comments from "../modules/RootAdmin/Home/CommentManagement/Comments/Comments";
-import Home from "../modules/RootAdmin/Home/Home";
-import AddLocation from "../modules/RootAdmin/Home/LocationManagement/AddLocation/AddLocation";
-import Locations from "../modules/RootAdmin/Home/LocationManagement/Locations/Locations";
-import AddRoom from "../modules/RootAdmin/Home/RoomManagement/AddRoom";
-
-import Rooms from "../modules/RootAdmin/Home/RoomManagement/Room/Rooms";
-import AddUser from "../modules/RootAdmin/Home/UserManagement/AddUser/AddUser";
-import UserId from "../modules/RootAdmin/Home/UserManagement/IdUser/UserId";
-import Users from "../modules/RootAdmin/Home/UserManagement/User/Users";
-
 import Protected from "./Protected";
+
+// import Auth from "../modules/Auth/Auth";
+// import Login from "../modules/Auth/Login/Login";
+// import Register from "../modules/Auth/Register/Register";
+// import RootAdmin from "../modules/RootAdmin";
+// import AddBookingRoom from "../modules/RootAdmin/Home/BookingRoomManagement/AddBookingRoom/AddBookingRoom";
+// import BookedRoom from "../modules/RootAdmin/Home/BookingRoomManagement/BookingRoom/BookedRoom";
+// import AddComment from "../modules/RootAdmin/Home/CommentManagement/AddComment/AddComment";
+// import Comments from "../modules/RootAdmin/Home/CommentManagement/Comments/Comments";
+// import Home from "../modules/RootAdmin/Home/Home";
+// import AddLocation from "../modules/RootAdmin/Home/LocationManagement/AddLocation/AddLocation";
+// import Locations from "../modules/RootAdmin/Home/LocationManagement/Locations/Locations";
+// import AddRoom from "../modules/RootAdmin/Home/RoomManagement/AddRoom";
+// import Rooms from "../modules/RootAdmin/Home/RoomManagement/Room/Rooms";
+// import AddUser from "../modules/RootAdmin/Home/UserManagement/AddUser/AddUser";
+// import UserId from "../modules/RootAdmin/Home/UserManagement/IdUser/UserId";
+// import Users from "../modules/RootAdmin/Home/UserManagement/User/Users";
+
+
+const Auth = lazy(() =>import("../modules/Auth"));
+const Login = lazy(() =>import("../modules/Auth/Login"));
+const Register = lazy(() =>import("../modules/Auth/Register"));
+const RootAdmin = lazy(() =>import("../modules/RootAdmin"));
+const AddBookingRoom = lazy(() =>import("../modules/RootAdmin/Home/BookingRoomManagement/AddBookingRoom"));
+const BookedRoom = lazy(() =>import("../modules/RootAdmin/Home/BookingRoomManagement/BookingRoom"));
+const AddComment = lazy(() =>import("../modules/RootAdmin/Home/CommentManagement/AddComment"));
+const Comments = lazy(() =>import("../modules/RootAdmin/Home/CommentManagement/Comments"));
+const Home = lazy(() =>import("../modules/RootAdmin/Home"));
+const AddLocation = lazy(() =>import("../modules/RootAdmin/Home/LocationManagement/AddLocation"));
+const Locations = lazy(() =>import("../modules/RootAdmin/Home/LocationManagement/Locations"));
+const AddRoom = lazy(() =>import("../modules/RootAdmin/Home/RoomManagement/AddRoom"));
+const Rooms = lazy(() =>import("../modules/RootAdmin/Home/RoomManagement/Room"));
+const AddUser = lazy(() =>import("../modules/RootAdmin/Home/UserManagement/AddUser"));
+const UserId = lazy(() =>import("../modules/RootAdmin/Home/UserManagement/IdUser"));
+const Users = lazy(() =>import("../modules/RootAdmin/Home/UserManagement/User"));
+
+
 
 const routes = createBrowserRouter([
   // Access
-  { path: "/", element: <Access />, errorElement: <ErrorBoundary /> },
+  { path: "/", element: <Access />},
 
   // Auth
   {

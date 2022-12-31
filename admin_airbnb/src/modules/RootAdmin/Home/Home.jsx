@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Loading from "../../../components/Loading/Loading";
 import { getBookingRooms } from "../../../slices/bookingRoomSlice";
 import { getComments } from "../../../slices/commentSlice";
@@ -8,15 +9,16 @@ import { getRooms } from "../../../slices/roomSlice";
 import { getUser } from "../../../slices/userSlice";
 import { Col, Row } from "antd";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper";
+import { Navigation } from "swiper";
 
 import "swiper/css";
-import "swiper/css/pagination";
+import "swiper/css/navigation";
 
 import styles from "./Home.module.scss";
 
 const Home = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { users, loading: loadUsers } = useSelector((state) => state.userSlice);
   const { rooms, loading: loadRooms } = useSelector((state) => state.roomSlice);
   const { bookingRooms, loading: loadbooking } = useSelector(
@@ -56,12 +58,12 @@ const Home = () => {
   return (
     <div className={styles.wrapHome}>
       <div className={styles.headerHomeAdmin}>
-        <h4>HOME ADMIN</h4>
+        <h4>HOME</h4>
       </div>
       <div className={styles.contentHome}>
         <Row gutter={[16, 16]}>
           <Col span={6}>
-            <div className={styles.group}>
+            <div className={styles.group} onClick={() => navigate("/admin/users")}>
               <div className={styles.contentGroup}>
                 <h1>{users.length}</h1>
                 <p>Users</p>
@@ -70,7 +72,7 @@ const Home = () => {
           </Col>
           <Col span={6}>
             <div className={styles.group}>
-              <div className={styles.contentGroup}>
+              <div className={styles.contentGroup} onClick={() => navigate("/admin/rooms")}>
                 <h1>{rooms.length}</h1>
                 <p>Rooms</p>
               </div>
@@ -78,7 +80,7 @@ const Home = () => {
           </Col>
           <Col span={6}>
             <div className={styles.group}>
-              <div className={styles.contentGroup}>
+              <div className={styles.contentGroup} onClick={() => navigate("/admin/bookedRoom")}>
                 <h1>{bookingRooms.length}</h1>
                 <p>Booking</p>
               </div>
@@ -86,7 +88,7 @@ const Home = () => {
           </Col>
           <Col span={6}>
             <div className={styles.group}>
-              <div className={styles.contentGroup}>
+              <div className={styles.contentGroup} onClick={() => navigate("/admin/comments")}>
                 <h1>{comments.length}</h1>
                 <p>Comments</p>
               </div>
@@ -94,33 +96,34 @@ const Home = () => {
           </Col>
           <Col span={6}>
             <div className={styles.group}>
-              <div className={styles.contentGroup}>
+              <div className={styles.contentGroup} onClick={() => navigate("/admin/locations")}>
                 <h1>{locations.length}</h1>
-                <p>Location</p>
+                <p>Locations</p>
               </div>
             </div>
           </Col>
           <Col span={18}>
-            <div className={styles.group}>
-              {/* <Swiper
+            <div className={styles.carouselLocation}>
+              <Swiper
                 loop={true}
-                slidesPerView={5}
-                spaceBetween={30}
-                pagination={{
-                  clickable: true,
-                }}
-                width={500}
-                modules={[Pagination]}
+                slidesPerView={3}
+                spaceBetween={5}
+                navigation={true}
+                // width={500}
+                modules={[Navigation]}
                 className="mySwiper"
               >
                 {locations.map((item) => (
                   <SwiperSlide key={item.id}>
-                    <div>
-                      <img src={item.hinhAnh} alt={item.tenViTri} width={200} />
+                    <div className={styles.imgCarousel}>
+                      <img src={item.hinhAnh} alt={item.tenViTri} />
+                      <div className={styles.detailLocation}>
+                        <p>{item.tenViTri}</p>
+                      </div>
                     </div>
                   </SwiperSlide>
                 ))}
-              </Swiper> */}
+              </Swiper>
             </div>
           </Col>
         </Row>

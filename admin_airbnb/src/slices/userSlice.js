@@ -8,7 +8,7 @@ const initialState = {
 
   user: null,
   loadingUser: false,
-    errorUser: null,
+  errorUser: null,
 };
 
 export const getUser = createAsyncThunk("users/getUsers", async () => {
@@ -20,25 +20,22 @@ export const getUser = createAsyncThunk("users/getUsers", async () => {
   }
 });
 
-export const getUserById = createAsyncThunk(
-    "users/getUserById",
-    async (id) => {
-        try {
-            const data = await userAPI.getUserById(id);
-            return data;
-        } catch (error) {
-            throw error;
-        }
-    }
-)
+export const getUserById = createAsyncThunk("users/getUserById", async (id) => {
+  try {
+    const data = await userAPI.getUserById(id);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+});
 
 const userSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
-    deleteUserAction: (state,action) => {
-      return {...state, user: null};
-    }
+    deleteUserAction: (state, action) => {
+      return { ...state, user: null };
+    },
   },
   extraReducers: (builder) => {
     // Users
@@ -53,18 +50,18 @@ const userSlice = createSlice({
     });
 
     // Get user by id
-    builder.addCase(getUserById.pending, (state,action) => {
-        return {...state, loadingUser: true};
+    builder.addCase(getUserById.pending, (state, action) => {
+      return { ...state, loadingUser: true };
     });
-    builder.addCase(getUserById.fulfilled, (state,action) => {
-        return {...state, loadingUser: false, user: action.payload};
+    builder.addCase(getUserById.fulfilled, (state, action) => {
+      return { ...state, loadingUser: false, user: action.payload };
     });
-    builder.addCase(getUserById.rejected, (state,action) => {
-        return {...state, loadingUser: false, errorUser: action.error.message};
+    builder.addCase(getUserById.rejected, (state, action) => {
+      return { ...state, loadingUser: false, errorUser: action.error.message };
     });
   },
 });
 
-export const { deleteUserAction } =userSlice.actions;
+export const { deleteUserAction } = userSlice.actions;
 
 export default userSlice.reducer;

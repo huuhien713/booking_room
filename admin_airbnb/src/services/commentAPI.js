@@ -5,6 +5,10 @@ const commentsAPI = {
         return fetcher.get("binh-luan");
     },
 
+    getCommentsByRoom : (id) => {
+        return fetcher.get(`binh-luan/lay-binh-luan-theo-phong/${id}`)
+    },
+
     createComment : (values) => {
         return fetcher.post("binh-luan", values);
     },

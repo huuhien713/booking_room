@@ -1,12 +1,24 @@
-import React from "react";
+import React,{ useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 import { Col, Row } from "antd";
 import Swal from "sweetalert2";
 
 import commentsAPI from "../../../../../services/commentAPI";
 import styles from "./AddComment.module.scss";
+import { getRooms } from "../../../../../slices/roomSlice";
+import Loading from "../../../../../components/Loading/Loading";
+
 
 const AddComment = () => {
+  const dispatch = useDispatch();
+
+  const {rooms, loading } = useSelector(state => state.roomSlice);
+
+  useEffect(() => {
+    dispatch(getRooms());
+  },[]);
+
   const { register, handleSubmit, formState, reset } = useForm({
     defaultValues: {
       maPhong: "",
@@ -39,6 +51,10 @@ const AddComment = () => {
     }
   };
 
+  if(loading){
+    return <Loading />
+  }
+
   return (
     <div className={styles.wrapAddComments}>
       <div className={styles.headerAddComment}>
@@ -49,20 +65,23 @@ const AddComment = () => {
           <Row gutter={[20, 20]}>
             <Col span={12}>
               <div className={styles.input}>
-                <label>Room code</label>
-                <input
+                <label>Room</label>
+                <select
                   type="text"
                   {...register("maPhong", {
                     required: {
                       value: true,
-                      message: "Room code is required",
-                    },
-                    pattern: {
-                      value: /^[1-9]|[0-9]{2,}$/,
-                      message: "Room code is integer and greater than 0",
+                      message: "Room is required",
                     },
                   })}
-                />
+                > 
+                  <option value="">Select room</option>
+                  {
+                    rooms.map(item => (
+                      <option value={item.id} >{item.tenPhong}</option>
+                    ))
+                  }
+                </select>
                 {errors.maPhong && (
                   <p className={styles.txtError}>{errors.maPhong.message}</p>
                 )}

@@ -5,7 +5,7 @@ import {
   DeleteOutlined,
   EditOutlined,
 } from "@ant-design/icons";
-import { Table } from "antd";
+import { Table, Tooltip } from "antd";
 import { getComments } from "../../../../../slices/commentSlice";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
@@ -66,7 +66,7 @@ const Comments = () => {
 
   const onSubmit = async (values) => {
     try {
-      await commentsAPI.updateComment(values.id,values);
+      await commentsAPI.updateComment(values.id, values);
       dispatch(getComments());
       setSelectedIndex(null);
     } catch (error) {
@@ -76,11 +76,11 @@ const Comments = () => {
 
   const handleSelectedEdit = (values, index) => {
     setSelectedIndex(index);
-    
-    for(let key in values){
+
+    for (let key in values) {
       setValue(key, values[key]);
-    };
-  }
+    }
+  };
 
   // Table
   const columns = [
@@ -129,7 +129,7 @@ const Comments = () => {
         roomCode: (
           <div className={styles.input}>
             <input
-            placeholder={errors.maPhong && `${errors.maPhong.message}`}
+              placeholder={errors.maPhong && `${errors.maPhong.message}`}
               type="text"
               {...register("maPhong", {
                 required: {
@@ -148,7 +148,9 @@ const Comments = () => {
           <div className={styles.input}>
             <input
               type="text"
-              placeholder={errors.maNguoiBinhLuan && `${errors.maNguoiBinhLuan.message}`}
+              placeholder={
+                errors.maNguoiBinhLuan && `${errors.maNguoiBinhLuan.message}`
+              }
               {...register("maNguoiBinhLuan", {
                 required: {
                   value: true,
@@ -165,7 +167,9 @@ const Comments = () => {
         commentDate: (
           <div className={styles.input}>
             <input
-              placeholder={errors.ngayBinhLuan && `${errors.ngayBinhLuan.message}`}
+              placeholder={
+                errors.ngayBinhLuan && `${errors.ngayBinhLuan.message}`
+              }
               {...register("ngayBinhLuan", {
                 required: {
                   value: true,
@@ -191,7 +195,9 @@ const Comments = () => {
         star: (
           <div className={styles.input}>
             <input
-              placeholder={errors.saoBinhLuan && `${errors.saoBinhLuan.message}`}
+              placeholder={
+                errors.saoBinhLuan && `${errors.saoBinhLuan.message}`
+              }
               type="number"
               {...register("saoBinhLuan", {
                 required: {
@@ -208,7 +214,9 @@ const Comments = () => {
         ),
         action: (
           <div className={styles.actionEdit}>
-            <div className={styles.saveEdit} onClick={handleSubmit(onSubmit)}>Save</div>
+            <div className={styles.saveEdit} onClick={handleSubmit(onSubmit)}>
+              Save
+            </div>
             <div
               className={styles.cancelEdit}
               onClick={() => setSelectedIndex(null)}
@@ -229,18 +237,22 @@ const Comments = () => {
       star: item.saoBinhLuan,
       action: (
         <div className={styles.action}>
-          <div
-            className={styles.iconEdit}
-            onClick={() => handleSelectedEdit(item,index)}
-          >
-            <EditOutlined />
-          </div>
-          <div
-            className={styles.iconDelete}
-            onClick={() => deletedComment(item.id)}
-          >
-            <DeleteOutlined />
-          </div>
+          <Tooltip placement="bottom" title="Edit">
+            <div
+              className={styles.iconEdit}
+              onClick={() => handleSelectedEdit(item, index)}
+            >
+              <EditOutlined />
+            </div>
+          </Tooltip>
+          <Tooltip placement="bottom" title="Delete">
+            <div
+              className={styles.iconDelete}
+              onClick={() => deletedComment(item.id)}
+            >
+              <DeleteOutlined />
+            </div>
+          </Tooltip>
         </div>
       ),
     };
@@ -252,7 +264,7 @@ const Comments = () => {
       <div className={styles.headerComments}>
         <h3>Comments</h3>
         <div className={styles.search}>
-          <input type="text" placeholder="Search users" />
+          <input type="text" placeholder="Search" />
           <SearchOutlined />
         </div>
       </div>

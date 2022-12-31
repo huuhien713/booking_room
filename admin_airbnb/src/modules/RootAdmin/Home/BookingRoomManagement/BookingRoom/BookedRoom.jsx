@@ -4,7 +4,7 @@ import {
   getBookingByUser,
   getBookingRooms,
 } from "../../../../../slices/bookingRoomSlice";
-import { Table, Modal } from "antd";
+import { Table, Modal, Tooltip } from "antd";
 import {
   SearchOutlined,
   DeleteOutlined,
@@ -13,9 +13,10 @@ import {
 import Swal from "sweetalert2";
 import bookingRoomAPI from "../../../../../services/bookingRoomAPI";
 import { useNavigate } from "react-router-dom";
-import styles from "./BookingRoom.module.scss";
 import { handleModalEditBooking } from "../../../../../slices/modalSlice";
 import EditBooking from "../EditBooking/EditBooking";
+import styles from "./BookingRoom.module.scss";
+
 const BookedRoom = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -67,7 +68,7 @@ const BookedRoom = () => {
 
   const handleSearch = (evt) => {
     if (evt.key !== "Enter") return;
-    console.log(evt.target.value)
+    console.log(evt.target.value);
     if (!evt.target.value) {
       dispatch(getBookingRooms());
     }
@@ -129,18 +130,22 @@ const BookedRoom = () => {
       userCode: item.maNguoiDung,
       action: (
         <div className={styles.action}>
-          <div
-            className={styles.iconEdit}
-            onClick={() => dispatch(handleModalEditBooking(item))}
-          >
-            <EditOutlined />
-          </div>
-          <div
-            className={styles.iconDelete}
-            onClick={() => deleteBooking(item.id)}
-          >
-            <DeleteOutlined />
-          </div>
+          <Tooltip placement="bottom" title="Edit">
+            <div
+              className={styles.iconEdit}
+              onClick={() => dispatch(handleModalEditBooking(item))}
+            >
+              <EditOutlined />
+            </div>
+          </Tooltip>
+          <Tooltip placement="bottom" title="Delete">
+            <div
+              className={styles.iconDelete}
+              onClick={() => deleteBooking(item.id)}
+            >
+              <DeleteOutlined />
+            </div>
+          </Tooltip>
         </div>
       ),
     };

@@ -9,8 +9,7 @@ const initialState = {
     booking :null,
     loadingBooking: false,
     errorBooking: null,
-
-
+    
 }
 
 export const getBookingRooms = createAsyncThunk(

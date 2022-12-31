@@ -3,29 +3,54 @@ import { useForm } from "react-hook-form";
 import { UserOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../../slices/authSlice";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { Button } from "antd";
+import Swal from "sweetalert2";
 
 import styles from "./Login.module.scss";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const {user } = useSelector(state => state.authSlice);
+  const navigate = useNavigate();
+  const { user, error} = useSelector((state) => state.authSlice);
 
-
-  const { register, handleSubmit, formState } = useForm({
+  const { register, handleSubmit, formState, setValue } = useForm({
     defaultValues: { email: "", password: "" },
     mode: "onTouched",
   });
 
   const { errors } = formState;
 
-  
   const onSubmit = (values) => {
     dispatch(login(values));
+
+    if(error){
+      Swal.fire({
+        title: "Error!",
+        text: `${error}`,
+        icon: "error",
+        confirmButtonText: "Close",
+      });
+    }
+
+    Swal.fire({
+      title: "Success!",
+      text: "Congratulations on your successful",
+      icon: "success",
+      confirmButtonText: "Close",
+    });
   };
 
-  if(user){
-    return <Navigate to="/admin" />
+  const handleSetValue = () => {
+    setValue("email", "adminAirbnb@gmail.com");
+    setValue("password", "12345");
+  }
+
+  
+
+  if (user) {
+    
+    return <Navigate to="/admin" />;
   }
 
   return (
@@ -37,6 +62,7 @@ const Login = () => {
           </div>
           <h1>Login</h1>
         </div>
+
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* Email */}
           <div className={styles.inputLogin}>
@@ -72,6 +98,24 @@ const Login = () => {
             {errors.password && (
               <p className={styles.txtError}>{errors.password.message}</p>
             )}
+          </div>
+
+          <div className={styles.feature}>
+            <div className={styles.account}>
+              <span>Forgot password </span>
+              <Button
+                onClick={handleSetValue}
+              >
+                Click me
+              </Button>
+            </div>
+
+            <div
+              onClick={() => navigate("/register")}
+              className={styles.register}
+            >
+              Register account
+            </div>
           </div>
 
           <div className={styles.btn}>

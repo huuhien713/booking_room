@@ -4,11 +4,13 @@ const initialState = {
   modalEditUser: false,
   modalEditRoom: false,
   modalAddImgRoom: false,
+  modalCommentsRoom : false,
   modalEditBooking: false,
   bookingRoom: null,
   modalEditLocation: false,
   location: null,
   modalAddImgLocation: false,
+  
 };
 
 const modalSlice = createSlice({
@@ -24,6 +26,9 @@ const modalSlice = createSlice({
     handleModalAddImgRoom: (state, action) => {
       return { ...state, modalAddImgRoom: !state.modalAddImgRoom };
     },
+    handleModalCommentsRoom : (state,action) => {
+      return {...state, modalCommentsRoom: !state.modalCommentsRoom};
+    },
     handleModalEditBooking: (state, action) => {
       return { ...state, modalEditBooking: !state.modalEditBooking, bookingRoom: action.payload };
     },
@@ -31,8 +36,9 @@ const modalSlice = createSlice({
       return {...state, modalEditLocation: !state.modalEditLocation, location: action.payload};
     },
     handleModalAddImgLocation: (state,action) => {
-      return {...state, modalAddImgLocation: !state.modalAddImgLocation}
-    }
+      return {...state, modalAddImgLocation: !state.modalAddImgLocation};
+    },
+    
 
   },
 });
@@ -44,6 +50,7 @@ export const {
   handleModalEditBooking,
   handleModalEditLocation,
   handleModalAddImgLocation,
+  handleModalCommentsRoom,
 } = modalSlice.actions;
 
 export default modalSlice.reducer;

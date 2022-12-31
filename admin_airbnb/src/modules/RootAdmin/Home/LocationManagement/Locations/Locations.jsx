@@ -6,7 +6,7 @@ import {
   EditOutlined,
   FileImageOutlined,
 } from "@ant-design/icons";
-import { Table, Modal, Image } from "antd";
+import { Table, Modal, Image, Tooltip } from "antd";
 import {
   getLocationById,
   getLocations,
@@ -143,18 +143,23 @@ const Locations = () => {
       ),
       action: (
         <div className={styles.action}>
-          <div
-            className={styles.iconEdit}
-            onClick={() => dispatch(handleModalEditLocation(item))}
-          >
-            <EditOutlined />
-          </div>
-          <div
-            className={styles.iconDelete}
-            onClick={() => deleteLocation(item.id)}
-          >
-            <DeleteOutlined />
-          </div>
+          <Tooltip placement="bottom" title="Edit">
+            <div
+              className={styles.iconEdit}
+              onClick={() => dispatch(handleModalEditLocation(item))}
+            >
+              <EditOutlined />
+            </div>
+          </Tooltip>
+
+          <Tooltip placement="bottom" title="Delete">
+            <div
+              className={styles.iconDelete}
+              onClick={() => deleteLocation(item.id)}
+            >
+              <DeleteOutlined />
+            </div>
+          </Tooltip>
         </div>
       ),
     };
@@ -162,7 +167,6 @@ const Locations = () => {
   return (
     <div>
       <div className={styles.wrapLocations}>
-   
         <div className={styles.headerLocations}>
           <h4>Locations</h4>
 

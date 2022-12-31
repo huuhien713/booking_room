@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { getRooms, setRoomNull } from "../../../../../slices/roomSlice";
 import {
   SearchOutlined,
   DeleteOutlined,
   EditOutlined,
   FileImageOutlined,
+  CommentOutlined,
 } from "@ant-design/icons";
-import { Table, Modal, Image } from "antd";
+import { Table, Modal, Image, Tooltip } from "antd";
 import Swal from "sweetalert2";
 import roomAPI from "../../../../../services/RoomAPI";
 import {
   handleModalAddImgRoom,
+  handleModalCommentsRoom,
   handleModalEditRoom,
 } from "../../../../../slices/modalSlice";
 import EditRoom from "../EditRoom/EditRoom";
@@ -21,15 +22,14 @@ import AddImgRoom from "../AddImgRoom/AddImgRoom";
 import styles from "./Room.module.scss";
 import { getLocations } from "../../../../../slices/locationSlice";
 import Loading from "../../../../../components/Loading/Loading";
-
+import CommentsRoom from "../CommentsRoom/CommentsRoom";
 
 const Rooms = () => {
   const dispatch = useDispatch();
 
-
   // State
   const { rooms, loading } = useSelector((state) => state.roomSlice);
-  const { modalEditRoom, modalAddImgRoom } = useSelector(
+  const { modalEditRoom, modalAddImgRoom, modalCommentsRoom } = useSelector(
     (state) => state.modalSlice
   );
   const { locations, loading: loadingLocation } = useSelector(
@@ -38,8 +38,7 @@ const Rooms = () => {
 
   const [deletedRoom, setDeletedRoom] = useState(false);
   const [idRoom, setIdRoom] = useState(null);
-  const [searchRoom, setSeargRoom] = useState(null);
-
+  const [searchRoom, setSearchRoom] = useState(null);
 
   useEffect(() => {
     dispatch(getRooms());
@@ -65,6 +64,16 @@ const Rooms = () => {
   };
   const handleCancelEditRoom = () => {
     dispatch(handleModalEditRoom());
+    setIdRoom(null);
+    dispatch(setRoomNull());
+  };
+
+  const showModalCommentsRoom = (id) => {
+    dispatch(handleModalCommentsRoom());
+    setIdRoom(id);
+  };
+  const handleCancelCommentsRoom = () => {
+    dispatch(handleModalCommentsRoom());
     setIdRoom(null);
     dispatch(setRoomNull());
   };
@@ -101,13 +110,13 @@ const Rooms = () => {
   //SearchRoom
   const hanleSearchRoom = async (evt) => {
     if (!evt.target.value) {
-      setSeargRoom(rooms);
+      setSearchRoom(rooms);
       return;
     }
 
     try {
       const data = await roomAPI.getRoomByLocation(evt.target.value);
-      setSeargRoom(data);
+      setSearchRoom(data);
     } catch (error) {
       console.log(error);
     }
@@ -195,7 +204,9 @@ const Rooms = () => {
           onClick={() => showModalAddImg(item.id)}
         >
           <div className={styles.iconAddImg}>
-            <FileImageOutlined />
+            <Tooltip placement="bottom" title="Add Image">
+              <FileImageOutlined />
+            </Tooltip>
           </div>
           <p>Add image</p>
         </div>
@@ -215,17 +226,29 @@ const Rooms = () => {
       description: item.moTa,
       action: (
         <div className={styles.action}>
+          <Tooltip placement="left" title="Edit">
+            <div
+              className={styles.iconEdit}
+              onClick={() => showModalEditRoom(item.id)}
+            >
+              <EditOutlined />
+            </div>
+          </Tooltip>
+          <Tooltip placement="left" title="Delete">
+            <div
+              className={styles.iconDelete}
+              onClick={() => deleteRoom(item.id)}
+            >
+              <DeleteOutlined />
+            </div>
+          </Tooltip>
           <div
-            className={styles.iconEdit}
-            onClick={() => showModalEditRoom(item.id)}
+            className={styles.iconComment}
+            onClick={() => showModalCommentsRoom(item.id)}
           >
-            <EditOutlined />
-          </div>
-          <div
-            className={styles.iconDelete}
-            onClick={() => deleteRoom(item.id)}
-          >
-            <DeleteOutlined />
+            <Tooltip placement="left" title="Comments">
+              <CommentOutlined />
+            </Tooltip>
           </div>
         </div>
       ),
@@ -275,7 +298,7 @@ const Rooms = () => {
 
         {/* Modal */}
         <Modal
-          title="Adding image"
+          title={`Add image - Room id ${idRoom}`}
           open={modalAddImgRoom}
           width={1000}
           style={{ top: 20 }}
@@ -287,7 +310,7 @@ const Rooms = () => {
 
         {/* Modal Edit Room */}
         <Modal
-          title="Editing room"
+          title={`Edit - Room  id ${idRoom}`}
           open={modalEditRoom}
           width={1000}
           style={{ top: 20 }}
@@ -295,6 +318,18 @@ const Rooms = () => {
           onCancel={handleCancelEditRoom}
         >
           <EditRoom idRoom={idRoom} />
+        </Modal>
+
+        {/* Modal Comments room */}
+        <Modal
+          title={`Comment - Room id ${idRoom}`}
+          open={modalCommentsRoom}
+          width={1000}
+          style={{ top: 20 }}
+          footer={null}
+          onCancel={handleCancelCommentsRoom}
+        >
+          <CommentsRoom idRoom={idRoom} />
         </Modal>
       </div>
     </div>

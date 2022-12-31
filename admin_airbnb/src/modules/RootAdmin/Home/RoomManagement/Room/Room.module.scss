@@ -75,7 +75,7 @@
       text-align: center;
       line-height: 23px;
       cursor: pointer;
-      margin: 10px 5px;
+      margin: 5px;
       font-size: 20px;
       &:hover {
         color: rgb(59, 195, 59);
@@ -91,12 +91,28 @@
       text-align: center;
       line-height: 23px;
       cursor: pointer;
-      margin: 5px;
+      margin: 10px 5px;
       font-size: 20px;
       &:hover {
         color: rgb(248, 111, 111);
         background-color: white;
         border-color: rgb(248, 111, 111);
+      }
+    }
+    .iconComment{
+      width: 28px;
+      height: 28px;
+      border: 1px solid black;
+      border-radius: 5px;
+      text-align: center;
+      line-height: 23px;
+      cursor: pointer;
+      margin: 5px;
+      font-size: 20px;
+      &:hover {
+        color: rgb(49, 49, 200);
+        background-color: white;
+        border-color: rgb(49, 49, 200);
       }
     }
   }

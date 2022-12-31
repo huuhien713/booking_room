@@ -7,7 +7,7 @@ import userAPI from "../../../../../services/userAPI";
 import styles from "./AddUser.module.scss";
 
 const AddUser = () => {
-  const { register, handleSubmit, formState } = useForm({
+  const { register, handleSubmit, formState, reset } = useForm({
     defaultValues: {
       name: "",
       email: "",
@@ -25,6 +25,7 @@ const AddUser = () => {
   const onSubmit = async (values) => {
     try {
       await userAPI.createUser(values);
+      reset();
       Swal.fire({
         title: "Success!",
         text: "Congratulations on your successful adding user",

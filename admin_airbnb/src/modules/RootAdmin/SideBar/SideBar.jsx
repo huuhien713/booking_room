@@ -13,12 +13,14 @@ import {
 import { Menu } from "antd";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { logout } from "../../../slices/authSlice";
 import styles from "./SideBar.module.scss";
 import Loading from "../../../components/Loading/Loading";
 
 const SideBar = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
 
   const { user, loading } = useSelector((state) => state.authSlice);
@@ -73,16 +75,19 @@ const SideBar = () => {
       getItem(<Link to="/admin/addLocation">Add Location</Link>, "12"),
     ]),
     getItem("Account", "sub6", <UserOutlined />, [
+      getItem(<Link to={`/admin/users/${admin.id}`}>Information</Link>, "13"),
+      getItem(<Link to={"/register"}>Register</Link>, "14"),
+
       getItem(
         <div onClick={() => dispatch(logout())}>
           <p>Logout</p>
         </div>,
-        "13"
+        "15"
       ),
     ]),
   ];
 
-  const rootSubmenuKeys = ['sub1', 'sub2', 'sub3', 'sub4', 'sub5', 'sub6'];
+  const rootSubmenuKeys = ["sub1", "sub2", "sub3", "sub4", "sub5", "sub6"];
 
   const [openKeys, setOpenKeys] = useState([]);
   const onOpenChange = (keys) => {
@@ -105,28 +110,38 @@ const SideBar = () => {
       ) : (
         <div className={styles.detailAdmin}>
           <div className={styles.avatar}>
-            <img src={admin.avatar} alt="avatar" />
+            {admin.avatar ? (
+              <img src={admin.avatar} alt="avatar" />
+            ) : (
+              <div className={styles.notAvatar}>
+                <UserOutlined />
+              </div>
+            )}
           </div>
           <h3>{admin.role}</h3>
-          <p>Id: {admin.id}</p>
+          <p>
+            Id: {admin.id} -
+            <span
+              className={styles.detail}
+              onClick={() => navigate(`/admin/users/${admin.id}`)}
+            >
+              Detail
+            </span>
+          </p>
           <p>Name: {admin.name} </p>
         </div>
       )}
 
-    <div className={styles.wrapMenu}>
-
-      <Menu
-        // defaultSelectedKeys={["1"]}
-        // defaultOpenKeys={["sub3"]}
-        openKeys={openKeys}
-        onOpenChange={onOpenChange}
-        mode="inline"
-        // theme="dark"
-        inlineCollapsed={collapsed}
-        items={items}
-      />
-    </div>
-
+      <div className={styles.wrapMenu}>
+        <Menu
+          openKeys={openKeys}
+          onOpenChange={onOpenChange}
+          mode="inline"
+          // theme="dark"
+          inlineCollapsed={collapsed}
+          items={items}
+        />
+      </div>
     </div>
   );
 };

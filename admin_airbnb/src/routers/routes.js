@@ -5,23 +5,6 @@ import NotFound from "../components/NotFound";
 import Access from "../modules/Access/Access";
 import Protected from "./Protected";
 
-// import Auth from "../modules/Auth/Auth";
-// import Login from "../modules/Auth/Login/Login";
-// import Register from "../modules/Auth/Register/Register";
-// import RootAdmin from "../modules/RootAdmin";
-// import AddBookingRoom from "../modules/RootAdmin/Home/BookingRoomManagement/AddBookingRoom/AddBookingRoom";
-// import BookedRoom from "../modules/RootAdmin/Home/BookingRoomManagement/BookingRoom/BookedRoom";
-// import AddComment from "../modules/RootAdmin/Home/CommentManagement/AddComment/AddComment";
-// import Comments from "../modules/RootAdmin/Home/CommentManagement/Comments/Comments";
-// import Home from "../modules/RootAdmin/Home/Home";
-// import AddLocation from "../modules/RootAdmin/Home/LocationManagement/AddLocation/AddLocation";
-// import Locations from "../modules/RootAdmin/Home/LocationManagement/Locations/Locations";
-// import AddRoom from "../modules/RootAdmin/Home/RoomManagement/AddRoom";
-// import Rooms from "../modules/RootAdmin/Home/RoomManagement/Room/Rooms";
-// import AddUser from "../modules/RootAdmin/Home/UserManagement/AddUser/AddUser";
-// import UserId from "../modules/RootAdmin/Home/UserManagement/IdUser/UserId";
-// import Users from "../modules/RootAdmin/Home/UserManagement/User/Users";
-
 
 const Auth = lazy(() =>import("../modules/Auth"));
 const Login = lazy(() =>import("../modules/Auth/Login"));
